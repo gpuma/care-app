@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace CareApp.Models
 {
-    class Beacon
+    public class Beacon
     {
-        string Uuid { get; set; }
-        short Major { get; set; }
-        short Minor { get; set; }
+        public string Uuid { get; set; }
+        public short Major { get; set; }
+        public short Minor { get; set; }
         //Far, Near, Inmediate
-        string RelativeDistance { get; set; }
+        public string RelativeDistance { get; set; }
         //iBeacon or Eddystone
-        string Type { get; set; }
+        public string Type { get; set; }
     }
 }

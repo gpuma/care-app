@@ -38,7 +38,6 @@
     <Compile Include="App.cs" />
     <Compile Include="BeaconTest.cs" />
     <Compile Include="IBeaconFinder.cs" />
-    <Compile Include="IMierda.cs" />
     <Compile Include="Models\Beacon.cs" />
     <Compile Include="Page1.xaml.cs">
       <DependentUpon>Page1.xaml</DependentUpon>
@@ -112,13 +111,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\BeaconsView.xaml">
+    <EmbeddedResource Include="Views\MainTabbedView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\MainTabbedView.xaml">
+    <EmbeddedResource Include="Views\BeaconsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

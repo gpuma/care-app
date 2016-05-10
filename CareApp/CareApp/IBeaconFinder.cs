@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CareApp.Models;
 
 namespace CareApp
 {
@@ -7,6 +8,6 @@ namespace CareApp
     {
         void startScanning();
         void stopScanning();
-        IEnumerable<String> getBeacons();
+        IEnumerable<Beacon> getBeacons();
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Acr;
 using Estimotes;
+using System.Diagnostics;
 
 namespace CareApp
 {
@@ -13,6 +14,7 @@ namespace CareApp
     {
         Button btnStart = new Button { Text = "Comenzar Beacons" };
         Button btnStop = new Button { Text = "Detener Beacons" };
+        BeaconRegion region = new BeaconRegion("pinga", "B9407F30-F5F8-466E-AFF9-25556B57FE6D");
         public BeaconTest()
         {
             this.Content = new StackLayout
@@ -25,11 +27,11 @@ namespace CareApp
             };
             btnStart.Clicked += (sender, e) =>
              {
-                 EstimoteManager.Instance.StartRanging(new BeaconRegion("blueberry", "B9407F30-F5F8-466E-AFF9-25556B57FE6D"));
+                 EstimoteManager.Instance.StartRanging(region);
              };
             btnStop.Clicked += (sender, e) =>
             {
-                EstimoteManager.Instance.StopRanging(new BeaconRegion("blueberry", "B9407F30-F5F8-466E-AFF9-25556B57FE6D"));
+                EstimoteManager.Instance.StopRanging(region);
             };
             test();
         }
@@ -49,7 +51,10 @@ namespace CareApp
             }
             EstimoteManager.Instance.Ranged += (sender, beacons) =>
             {
-                log(String.Format("Evento Ranged fue activado con proximidad {0}", beacons.First().Proximity));
+                foreach (var b in beacons)
+                {
+                    Debug.WriteLine((String.Format("detectado ibeacon con uid {0} y proximidad {1}", b.Uuid, b.Proximity)));
+                }
             };
 
         }

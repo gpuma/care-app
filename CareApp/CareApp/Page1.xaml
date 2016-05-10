@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CareApp.Page1">
+  <StackLayout>
+    <Button x:Name="btnIniciar" Text="INICIAR" Clicked="btnIniciar_Clicked"/>
+    <Button x:Name="btnParar" Text="Parar" Clicked="btnParar_Clicked"/>
+    <Button x:Name="btnLeer" Text="Leer" Clicked="btnLeer_Clicked"/>
+    <ListView x:Name="lista" />
+  </StackLayout>
+</ContentPage>

@@ -44,14 +44,20 @@ namespace CareApp.Views
         void HandleReceivedMessages()
         {
             MessagingCenter.Subscribe<TickedMessage>(this, "TickedMessage", message => {
-                Device.BeginInvokeOnMainThread(() => {
-                    lblText.Text = message.Message;
-                });
+                //todo: check this async shit
+                Device.BeginInvokeOnMainThread(async () => {
+                    //lblText.Text = message.Message;
+                    await notificator.Notify(
+                        ToastNotificationType.Info,
+                        "CHI", message.Message, TimeSpan.FromSeconds(1));
+                    });
             });
 
             MessagingCenter.Subscribe<CancelledMessage>(this, "CancelledMessage", message => {
-                Device.BeginInvokeOnMainThread(() => {
-                    lblText.Text = "Cancelled";
+                Device.BeginInvokeOnMainThread(async () => {
+                    await notificator.Notify(
+                        ToastNotificationType.Info,
+                        "NO", "Cancelled", TimeSpan.FromSeconds(1));
                 });
             });
         }

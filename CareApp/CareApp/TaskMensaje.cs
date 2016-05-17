@@ -16,9 +16,9 @@ namespace CareApp
                 {
                     token.ThrowIfCancellationRequested();
 
-                    await Task.Delay(2000);
+                    await Task.Delay(3000);
 
-                    var message = new TickedMessage { Message = "hola" + i.ToString() };
+                    var message = new TickedMessage { Message = "hola " + i.ToString() };
                     Device.BeginInvokeOnMainThread(() =>
                     {
                         MessagingCenter.Send<TickedMessage>(message, "TickedMessage");

@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-using System.Collections.ObjectModel
-
+using System.Collections.ObjectModel;
+using Estimotes;
 using Xamarin.Forms;
 using CareApp.Models;
+using System.Diagnostics;
 
 namespace CareApp.Views
 {
@@ -18,51 +15,63 @@ namespace CareApp.Views
         //este tipo de colección se encarga de actualizar la interfaz
         //según el cambio en los datos, justo lo que queremos
         public ObservableCollection<Beacon> Beacons { get; set; }
-        //obtenemos la implementación específica a la plataforma que estemos corriendo
-        IBeaconFinder beaconFinder = DependencyService.Get<IBeaconFinder>();
+
+        //usando la uid default de estimote
+        //todo: poner esta info en un txt
+        BeaconRegion defaultRegion = new BeaconRegion("test-region", "B9407F30-F5F8-466E-AFF9-25556B57FE6D");
 
         public BeaconsView()
         {
             InitializeComponent();
 
-
-            //dummy beacons
-            //todo: cambiar a los reales
-            Beacons = new ObservableCollection<Beacon> {
-                new Beacon { Uuid = "caca", Major = 30, Minor = 10, RelativeDistance = "Lejos", Type = "iBeacon"},
-                new Beacon { Uuid = "caca2", Major = 30, Minor = 10, RelativeDistance = "Cerca", Type = "iBeacon"},
-                new Beacon { Uuid = "caca3", Major = 30, Minor = 10, RelativeDistance = "Aquisito", Type = "iBeacon"}
-            };
+            this.Beacons = new ObservableCollection<Beacon>();
 
             //crucial ponerlo al final para que no hayan problemas de binding
             BindingContext = this;
+
+            //añadimos el gestor de eventos para beacons
+            EstimoteManager.Instance.Ranged += Beacons_Ranged;
+        }
+
+        private void Beacons_Ranged(object s, IEnumerable<IBeacon> beacons)
+        {
+            //reiniciamos la lista cada en cada evento de detección
+            this.Beacons.Clear();
+            //convert this type of beacon to our beacon model
+            foreach (var b in beacons)
+            {
+                this.Beacons.Add(new Beacon
+                {
+                    Uuid = b.Uuid,
+                    Major = b.Major,
+                    Minor = b.Minor,
+                    RelativeDistance = b.Proximity.ToString()
+                });
+            }
+            Debug.WriteLine(String.Format("found {0}", Beacons.Count));
         }
 
         //para iniciar o detener el escaneo de beacons
-        void OnScan_Clicked(object sender, EventArgs args)
+        async void OnScan_Clicked(object sender, EventArgs args)
         {
+            //todo: chequear si cada vez que se clickea debe hacerse esto
+            //inicializamos el plugin
+            var status = await EstimoteManager.Instance.Initialize();
+            if(status!=  BeaconInitStatus.Success)
+            {
+                throw new Exception("unable to start beacon manager");
+            }         
+
             //simple toggle
             isScanning = !isScanning;
             if(isScanning)
             {
-                beaconFinder.startScanning();
+                EstimoteManager.Instance.StartRanging(defaultRegion);
                 btnScan.Text = "Parar";
-
-                //todo: MAIN THING IS TO USE THE MUTLIPLAT BEACON LIBRARY ARC
-
-                var scannedBeacons = beaconFinder.getBeacons();
-
-                Beacons.Clear();
-                //todo: crear un metodo que convierta automáticamente al tipo de beacon
-                foreach(var sb in scannedBeacons)
-                {
-                    //Beacons.Add(new Beacon() { Uuid = sb.u })
-                }
-
             }
             else
             {
-                beaconFinder.stopScanning();
+                EstimoteManager.Instance.StopRanging(defaultRegion);
                 btnScan.Text = "Escanear";
             }
         }

@@ -40,7 +40,7 @@ namespace CareApp.Droid
             }
         }
 
-        public IEnumerable<String> getBeacons()
+        public IEnumerable<Model.Beacon> getBeacons()
         {
             //wait NIGGA
             //return beacons.Select(b => new Model.Beacon() {
@@ -49,6 +49,7 @@ namespace CareApp.Droid
             //    Minor = b.Minor,
             //    RelativeDistance = b.
             //};
+            return null;
         }
 
         public void startScanning()

@@ -5,12 +5,17 @@ using Estimotes;
 using Xamarin.Forms;
 using CareApp.Models;
 using System.Diagnostics;
+using Plugin.Toasts;
+//using System.Threading.Tasks;
+//using System.Threading;
 
 namespace CareApp.Views
 {
     public partial class BeaconsView : ContentPage
     {
         bool isScanning = false;
+        //para los Toasts
+        IToastNotificator notificator = DependencyService.Get<IToastNotificator>();        
         
         //este tipo de colección se encarga de actualizar la interfaz
         //según el cambio en los datos, justo lo que queremos
@@ -31,6 +36,24 @@ namespace CareApp.Views
 
             //añadimos el gestor de eventos para beacons
             EstimoteManager.Instance.Ranged += Beacons_Ranged;
+
+            //para la background shit
+            HandleReceivedMessages();
+        }
+
+        void HandleReceivedMessages()
+        {
+            MessagingCenter.Subscribe<TickedMessage>(this, "TickedMessage", message => {
+                Device.BeginInvokeOnMainThread(() => {
+                    lblText.Text = message.Message;
+                });
+            });
+
+            MessagingCenter.Subscribe<CancelledMessage>(this, "CancelledMessage", message => {
+                Device.BeginInvokeOnMainThread(() => {
+                    lblText.Text = "Cancelled";
+                });
+            });
         }
 
         private void Beacons_Ranged(object s, IEnumerable<IBeacon> beacons)
@@ -80,6 +103,21 @@ namespace CareApp.Views
         async void OnList_Tapped(object sender, EventArgs args)
         {
             //todo: implementar
+            await notificator.Notify(
+                ToastNotificationType.Success,
+                "CHi", "Hola amiguitos", TimeSpan.FromSeconds(2));
+        }
+
+        void OnStart_Clicked(object sender, EventArgs args)
+        {
+            var msg = new StartRunningTaskMessage();
+            MessagingCenter.Send(msg, "StartRunningTaskMessage");
+        }
+
+        void OnStop_Clicked(object sender, EventArgs args)
+        {
+            var msg = new StopRunningTaskMessage();
+            MessagingCenter.Send(msg, "StopRunningTaskMessage");
         }
     }
 }

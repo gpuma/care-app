@@ -5,6 +5,9 @@
 	<ContentPage.Content>
 		<StackLayout>
 			<Button x:Name="btnScan" Text="Escanear" Clicked="OnScan_Clicked"/>
+			<Button x:Name="btnStart" Text="Start" Clicked="OnStart_Clicked"/>
+			<Button x:Name="btnStop" Text="Stop" Clicked="OnStop_Clicked"/>
+			<Label x:Name="lblText" Text="FAP"/>
 			<ScrollView Orientation="Vertical" VerticalOptions="FillAndExpand">
 				<ListView x:Name="lstBeacons" ItemsSource="{Binding Beacons}" VerticalOptions="FillAndExpand"
 				HasUnevenRows="true" ItemTapped="OnList_Tapped">

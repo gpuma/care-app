@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="BeaconManager.cs" />
     <Compile Include="Messages.cs" />
     <Compile Include="Models\Beacon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

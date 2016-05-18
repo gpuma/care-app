@@ -33,45 +33,64 @@ namespace CareApp
 
         private static async void Beacons_Ranged(object sender, IEnumerable<IBeacon> beacons)
         {
-            //todo: temporal, usamos Major como id
-            ushort targetMajor = 40796;
-            string targetProximity = Proximity.Immediate.ToString();
-            //obtenemos el beacon y proximidad q queremos
-            var targetBeacon = beacons.Where(b => b.Major == targetMajor && b.Proximity.ToString() == targetProximity).FirstOrDefault();
-            if (targetBeacon == null)
+            ////todo: temporal, usamos Major como id
+            //ushort targetMajor = 40796;
+            //string targetProximity = Proximity.Immediate.ToString();
+            ////obtenemos el beacon y proximidad q queremos
+            //var targetBeacon = beacons.Where(b => b.Major == targetMajor && b.Proximity.ToString() == targetProximity).FirstOrDefault();
+            //if (targetBeacon == null)
+            //{
+            //    sw.Reset();
+            //    return;
+            //}
+            //sw.Start();
+            ////mostramos una notificación
+            //await notificator.Notify(
+            //        ToastNotificationType.Info,
+            //        "SI", String.Format("pasaron {0} ms", sw.ElapsedMilliseconds), TimeSpan.FromSeconds(.5));
+
+            //CRUCE
+            var StartBeacon = new Tuple<ushort, string>(53847, Proximity.Immediate.ToString());
+            var EndBeacon = new Tuple<ushort, string>(40796, Proximity.Immediate.ToString());
+
+            //comienzo del cruce
+            if(CROSS == "NO" && beacons.Contain(StartBeacon))
             {
-                sw.Reset();
-                //todo: no estoy seguro
-                previous = null;
+                sw.Restart();
+                CROSS = "BEGAN";
+                Toast("COMIENZO CRUCE");
                 return;
             }
-            //primera vez escaneado
-            if (previous == null)
+            if(CROSS == "BEGAN" && beacons.Contain(EndBeacon))
             {
-                previous = new Tuple<ushort, string>(targetBeacon.Major,
-                    targetBeacon.Proximity.ToString());
-                sw.Start();
-            }
-            else if (targetBeacon.IsEqual(previous))
-            {
-                //mostramos una notificación
-                await notificator.Notify(
-                        ToastNotificationType.Info,
-                        "SI", String.Format("pasaron {0} ms", sw.ElapsedMilliseconds), TimeSpan.FromSeconds(.5));
-            }
-            //no se detecto el mismo beacon (o a la misma proximidad)
-            else
-            {
-                sw.Reset();
-            }
+                sw.Stop();
+                Toast(String.Format("FIN CRUCE en {0} seg", sw.Elapsed.TotalSeconds));
 
-            //TODO: PREVIOUS IS USELESS BECAUSE THERE CAN BE MANY BEACONS
+                //cruce satisfactorio (emergencia
+                if(sw.Elapsed.TotalSeconds < 10)
+                    Toast("CRUCE DETECTADO");
+
+                //todo: revisar esto
+                CROSS = "NO";
+            }
         }
+        static string CROSS = "NO";
 
         //comparamos el beacon con nuestra tupla q representa a un beacon
         static bool IsEqual(this IBeacon b, Tuple<ushort,string> bt)
         {
             return (b.Major == bt.Item1 && b.Proximity.ToString() == bt.Item2);
+        }
+
+        //para ver si la lista de beacons contiene a la tupla q representa a nuestro beacon
+        static bool Contain(this IEnumerable<IBeacon> beacons, Tuple<ushort, string> bt)
+        {
+            foreach(var b in beacons)
+            {
+                if (b.IsEqual(bt))
+                    return true;
+            }
+            return false;
         }
 
         public static async void Start()
@@ -86,6 +105,13 @@ namespace CareApp
         public static void Stop()
         {
             EstimoteManager.Instance.StopRanging(defaultRegion);
+        }
+
+        static async void Toast(string msg)
+        {
+            await notificator.Notify(
+                    ToastNotificationType.Success,
+                    "SI", msg, TimeSpan.FromSeconds(1));
         }
     }
 }

@@ -35,8 +35,9 @@ namespace CareApp.Views
             BindingContext = this;
 
             //añadimos el gestor de eventos para beacons
-            //todo: descomentar
-            //EstimoteManager.Instance.Ranged += Beacons_Ranged;
+            //todo: creo q hay q desuscribir este evento cada vez q se
+            //pare el gestor para no intervenir con el otro servicio
+            EstimoteManager.Instance.Ranged += Beacons_Ranged;
 
             //para la background shit
             HandleReceivedMessages();
@@ -117,9 +118,9 @@ namespace CareApp.Views
 
         void OnStart_Clicked(object sender, EventArgs args)
         {
+            BeaconManager.Start();
             //var msg = new StartRunningTaskMessage();
             //MessagingCenter.Send(msg, "StartRunningTaskMessage");
-            BeaconManager.Start();
         }
 
         void OnStop_Clicked(object sender, EventArgs args)

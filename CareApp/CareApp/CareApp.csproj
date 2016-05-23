@@ -37,6 +37,8 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="BeaconManager.cs" />
+    <Compile Include="Configuration.cs" />
+    <Compile Include="Models\EmergencyConfig.cs" />
     <Compile Include="Messages.cs" />
     <Compile Include="Models\Beacon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -103,7 +105,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\MainTabbedView.xaml">
@@ -114,6 +118,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\BeaconsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Config\emergency-configs.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

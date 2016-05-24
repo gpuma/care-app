@@ -6,14 +6,14 @@ using CareApp.Models;
 
 namespace CareApp
 {
-    public static class Configuration
+    public static class ConfigManager
     {
         //set of emergencies to be detected, tied to specific beacons
         public static IEnumerable<EmergencyConfig> EmergencyConfigs { get; set; }
 
         public static void LoadEmergencyConfigs()
         {
-            var ass = typeof(Configuration).GetTypeInfo().Assembly;
+            var ass = typeof(ConfigManager).GetTypeInfo().Assembly;
             using (var stream = ass.GetManifestResourceStream("CareApp.Config.emergency-configs.xml"))
             using (StreamReader reader = new StreamReader(stream))
             {

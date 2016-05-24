@@ -37,7 +37,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="BeaconManager.cs" />
-    <Compile Include="Configuration.cs" />
+    <Compile Include="ConfigManager.cs" />
     <Compile Include="Models\EmergencyConfig.cs" />
     <Compile Include="Messages.cs" />
     <Compile Include="Models\Beacon.cs" />

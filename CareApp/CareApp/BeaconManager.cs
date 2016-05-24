@@ -7,6 +7,7 @@ using Estimotes;
 using System.Diagnostics;
 using Plugin.Toasts;
 using Xamarin.Forms;
+using CareApp.Models;
 
 namespace CareApp
 {
@@ -25,14 +26,41 @@ namespace CareApp
         //cronometro
         static Stopwatch sw = new Stopwatch();
 
+        //diccionario de stopwatches
+        //el índice es la id de un beacon config
+        static Dictionary<string, Stopwatch> timers;
+
         //corre la primera vez q se usa la clase estática
         static BeaconManager()
         {
             EstimoteManager.Instance.Ranged += Beacons_Ranged;
+            //we load the emergency configurations 
+            //todo: uncomment
+            ConfigManager.LoadEmergencyConfigs();
         }
 
         private static async void Beacons_Ranged(object sender, IEnumerable<IBeacon> beacons)
         {
+            //todo: add enabled check
+            foreach(var econfig in ConfigManager.EmergencyConfigs)
+            {
+                switch(econfig.EType)
+                {
+                    case EmergencyType.ProximityForPeriod:
+                        var targetBeacon = new Tuple<ushort, string>(econfig.BeaconId1, econfig.Proximity);
+                        if (!beacons.Contain(targetBeacon))
+                            continue;
+                        sw.Start();
+                        //mostramos una notificación
+                        await notificator.Notify(
+                                ToastNotificationType.Info,
+                                "SI", String.Format("pasaron {0} ms", sw.ElapsedMilliseconds), TimeSpan.FromSeconds(.5));
+                        break;
+                    case EmergencyType.FastCross:
+
+                        break;
+                }
+            }
             ////todo: temporal, usamos Major como id
             //ushort targetMajor = 40796;
             //string targetProximity = Proximity.Immediate.ToString();
@@ -74,7 +102,11 @@ namespace CareApp
                 CROSS = "NO";
             }
         }
+
+        //todo: move this somewhere else
         static string CROSS = "NO";
+
+        //static Tuple<ushort, string> TupleFrom
 
         //comparamos el beacon con nuestra tupla q representa a un beacon
         static bool IsEqual(this IBeacon b, Tuple<ushort,string> bt)

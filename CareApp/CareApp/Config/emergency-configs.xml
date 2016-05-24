@@ -2,15 +2,16 @@
 <ArrayOfEmergencyConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <EmergencyConfig>
     <Id>1</Id>
-    <EType>1</EType>
+    <EType>0</EType>
     <BeaconId1>28927</BeaconId1>
     <!--<BeaconId2>xsi:nil</BeaconId2>-->
+    <!--proximity 1 = immediate-->
     <Proximity>Immediate</Proximity>
-    <Time>3000</Time>
+    <Time>2000</Time>
   </EmergencyConfig>
   <EmergencyConfig>
     <Id>2</Id>
-    <EType>3</EType>
+    <EType>2</EType>
     <BeaconId1>53847</BeaconId1>
     <BeaconId2>40796</BeaconId2>
     <Proximity>Immediate</Proximity>

@@ -64,8 +64,32 @@ namespace CareApp
                             sw.Reset();
                         }
                         break;
-                    case EmergencyType.FastCross:
 
+                    case EmergencyType.FastCross:
+                        var StartBeacon = new Tuple<ushort, string>(econfig.BeaconId1, econfig.Proximity);
+                        var EndBeacon = new Tuple<ushort, string>(econfig.BeaconId2, econfig.Proximity);
+
+                        //comienzo del cruce
+                        if (CROSS == "NO" && beacons.Contain(StartBeacon))
+                        {
+                            sw.Restart();
+                            CROSS = "BEGAN";
+                            Toast("COMIENZO CRUCE");
+                            return;
+                        }
+                        if (CROSS == "BEGAN" && beacons.Contain(EndBeacon))
+                        {
+                            sw.Stop();
+                            Toast(String.Format("FIN CRUCE en {0} seg", sw.Elapsed.TotalSeconds));
+
+                            //todo: division is returning 0, should be decimal
+                            //cruce satisfactorio (emergencia
+                            if (sw.Elapsed.TotalSeconds < econfig.Time / 1000)
+                                Toast("CRUCE DETECTADO");
+
+                            //todo: revisar esto
+                            CROSS = "NO";
+                        }
                         break;
                 }
             }
@@ -85,30 +109,30 @@ namespace CareApp
             //        ToastNotificationType.Info,
             //        "SI", String.Format("pasaron {0} ms", sw.ElapsedMilliseconds), TimeSpan.FromSeconds(.5));
 
-            //CRUCE
-            var StartBeacon = new Tuple<ushort, string>(53847, Proximity.Immediate.ToString());
-            var EndBeacon = new Tuple<ushort, string>(40796, Proximity.Immediate.ToString());
+            ////CRUCE
+            //var StartBeacon = new Tuple<ushort, string>(53847, Proximity.Immediate.ToString());
+            //var EndBeacon = new Tuple<ushort, string>(40796, Proximity.Immediate.ToString());
 
-            //comienzo del cruce
-            if(CROSS == "NO" && beacons.Contain(StartBeacon))
-            {
-                sw.Restart();
-                CROSS = "BEGAN";
-                Toast("COMIENZO CRUCE");
-                return;
-            }
-            if(CROSS == "BEGAN" && beacons.Contain(EndBeacon))
-            {
-                sw.Stop();
-                Toast(String.Format("FIN CRUCE en {0} seg", sw.Elapsed.TotalSeconds));
+            ////comienzo del cruce
+            //if(CROSS == "NO" && beacons.Contain(StartBeacon))
+            //{
+            //    sw.Restart();
+            //    CROSS = "BEGAN";
+            //    Toast("COMIENZO CRUCE");
+            //    return;
+            //}
+            //if(CROSS == "BEGAN" && beacons.Contain(EndBeacon))
+            //{
+            //    sw.Stop();
+            //    Toast(String.Format("FIN CRUCE en {0} seg", sw.Elapsed.TotalSeconds));
 
-                //cruce satisfactorio (emergencia
-                if(sw.Elapsed.TotalSeconds < 10)
-                    Toast("CRUCE DETECTADO");
+            //    //cruce satisfactorio (emergencia
+            //    if(sw.Elapsed.TotalSeconds < 10)
+            //        Toast("CRUCE DETECTADO");
 
-                //todo: revisar esto
-                CROSS = "NO";
-            }
+            //    //todo: revisar esto
+            //    CROSS = "NO";
+            //}
         }
 
         //todo: move this somewhere else

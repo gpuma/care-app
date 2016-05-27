@@ -12,8 +12,8 @@
   <EmergencyConfig>
     <Id>2</Id>
     <EType>2</EType>
-    <BeaconId1>53847</BeaconId1>
-    <BeaconId2>40796</BeaconId2>
+    <BeaconId1>40796</BeaconId1>
+    <BeaconId2>53847</BeaconId2>
     <Proximity>Immediate</Proximity>
     <Time>10000</Time>
   </EmergencyConfig>

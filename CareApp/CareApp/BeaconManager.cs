@@ -44,17 +44,25 @@ namespace CareApp
             //todo: add enabled check
             foreach(var econfig in ConfigManager.EmergencyConfigs)
             {
-                switch(econfig.EType)
+                switch ((EmergencyType)econfig.EType)
                 {
                     case EmergencyType.ProximityForPeriod:
                         var targetBeacon = new Tuple<ushort, string>(econfig.BeaconId1, econfig.Proximity);
                         if (!beacons.Contain(targetBeacon))
+                        {
+                            sw.Reset();
                             continue;
+                        }
                         sw.Start();
-                        //mostramos una notificación
-                        await notificator.Notify(
-                                ToastNotificationType.Info,
-                                "SI", String.Format("pasaron {0} ms", sw.ElapsedMilliseconds), TimeSpan.FromSeconds(.5));
+                        if (sw.ElapsedMilliseconds >= econfig.Time)
+                        {
+                            sw.Stop();
+                            //mostramos una notificación
+                            await notificator.Notify(
+                                    ToastNotificationType.Info,
+                                    "SI", String.Format("detectada proximidad de {0} seg.", sw.ElapsedMilliseconds / 1000), TimeSpan.FromSeconds(.1));
+                            sw.Reset();
+                        }
                         break;
                     case EmergencyType.FastCross:
 

@@ -9,7 +9,7 @@ namespace CareApp
     public static class ConfigManager
     {
         //set of emergencies to be detected, tied to specific beacons
-        public static IEnumerable<EmergencyConfig> EmergencyConfigs { get; set; }
+        public static List<EmergencyConfig> EmergencyConfigs { get; set; }
 
         public static void LoadEmergencyConfigs()
         {
@@ -17,8 +17,16 @@ namespace CareApp
             using (var stream = ass.GetManifestResourceStream("CareApp.Config.emergency-configs.xml"))
             using (StreamReader reader = new StreamReader(stream))
             {
-                var serializer = new XmlSerializer(typeof(IEnumerable<EmergencyConfig>));
-                EmergencyConfigs = (IEnumerable<EmergencyConfig>)serializer.Deserialize(reader);
+                try
+                {
+                    var serializer = new XmlSerializer(typeof(List<EmergencyConfig>));
+                    EmergencyConfigs = (List<EmergencyConfig>)serializer.Deserialize(reader);
+                }
+                catch (System.Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine(e.Message);
+                    throw;
+                }
             }
         }
     }

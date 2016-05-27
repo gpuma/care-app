@@ -10,8 +10,11 @@ namespace CareApp.Models
     {
         public string Id { get; set; }
 
-        EmergencyType eType;
-        public EmergencyType EType
+        //public string EType { get; set; }
+        //el tipo fue revertido a int en vez de enum
+        //xq no funciona muy bien en la serializacion
+        int eType;
+        public int EType
         {
             get
             {
@@ -19,7 +22,7 @@ namespace CareApp.Models
             }
             set
             {
-                this.eType = (EmergencyType) value;
+                this.eType = (int)value;
             }
         }
         public ushort BeaconId1 { get; set; }

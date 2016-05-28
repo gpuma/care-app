@@ -24,44 +24,58 @@ namespace CareApp
         static IToastNotificator notificator = DependencyService.Get<IToastNotificator>();
 
         //cronometro
-        static Stopwatch sw = new Stopwatch();
+        //todo: ya no
+        //static Stopwatch sw = new Stopwatch();
 
         //diccionario de stopwatches
         //el índice es la id de un beacon config
         static Dictionary<string, Stopwatch> timers;
 
+        static string CROSS = "NO";
+        
         //corre la primera vez q se usa la clase estática
         static BeaconManager()
         {
             EstimoteManager.Instance.Ranged += Beacons_Ranged;
             //we load the emergency configurations 
-            //todo: uncomment
             ConfigManager.LoadEmergencyConfigs();
+            //initialize stopwatches for each config
+            InitializeTimers();
+        }
+
+        private static void InitializeTimers()
+        {
+            //we limit it to the size of our configs
+            //might need to change this when we can add or delete configs
+            timers = new Dictionary<string, Stopwatch>(ConfigManager.EmergencyConfigs.Count);
+            foreach (var econfig in ConfigManager.EmergencyConfigs)
+                timers[econfig.Id] = new Stopwatch();
         }
 
         private static async void Beacons_Ranged(object sender, IEnumerable<IBeacon> beacons)
         {
-            //todo: add enabled check
+            //todo: add enabled check (FIRST NEED TO ADD ENABLED FIElD)
             foreach(var econfig in ConfigManager.EmergencyConfigs)
             {
+                var currentTimer = timers[econfig.Id];
                 switch ((EmergencyType)econfig.EType)
                 {
                     case EmergencyType.ProximityForPeriod:
                         var targetBeacon = new Tuple<ushort, string>(econfig.BeaconId1, econfig.Proximity);
                         if (!beacons.Contain(targetBeacon))
                         {
-                            sw.Reset();
+                            currentTimer.Reset();
                             continue;
                         }
-                        sw.Start();
-                        if (sw.ElapsedMilliseconds >= econfig.Time)
+                        currentTimer.Start();
+                        if (currentTimer.ElapsedMilliseconds >= econfig.Time)
                         {
-                            sw.Stop();
+                            currentTimer.Stop();
                             //mostramos una notificación
                             await notificator.Notify(
                                     ToastNotificationType.Info,
-                                    "SI", String.Format("detectada proximidad de {0} seg.", sw.ElapsedMilliseconds / 1000), TimeSpan.FromSeconds(.1));
-                            sw.Reset();
+                                    "SI", String.Format("detectada proximidad de {0} seg.", currentTimer.ElapsedMilliseconds / 1000.0), TimeSpan.FromSeconds(.1));
+                            currentTimer.Reset();
                         }
                         break;
 
@@ -72,71 +86,26 @@ namespace CareApp
                         //comienzo del cruce
                         if (CROSS == "NO" && beacons.Contain(StartBeacon))
                         {
-                            sw.Restart();
+                            currentTimer.Restart();
                             CROSS = "BEGAN";
                             Toast("COMIENZO CRUCE");
                             return;
                         }
                         if (CROSS == "BEGAN" && beacons.Contain(EndBeacon))
                         {
-                            sw.Stop();
-                            Toast(String.Format("FIN CRUCE en {0} seg", sw.Elapsed.TotalSeconds));
+                            currentTimer.Stop();
+                            Toast(String.Format("FIN CRUCE en {0} seg", currentTimer.Elapsed.TotalSeconds));
 
-                            //todo: division is returning 0, should be decimal
                             //cruce satisfactorio (emergencia
-                            if (sw.Elapsed.TotalSeconds < econfig.Time / 1000)
+                            if (currentTimer.Elapsed.TotalSeconds <= econfig.Time / 1000.0)
                                 Toast("CRUCE DETECTADO");
-
                             //todo: revisar esto
                             CROSS = "NO";
                         }
                         break;
                 }
             }
-            ////todo: temporal, usamos Major como id
-            //ushort targetMajor = 40796;
-            //string targetProximity = Proximity.Immediate.ToString();
-            ////obtenemos el beacon y proximidad q queremos
-            //var targetBeacon = beacons.Where(b => b.Major == targetMajor && b.Proximity.ToString() == targetProximity).FirstOrDefault();
-            //if (targetBeacon == null)
-            //{
-            //    sw.Reset();
-            //    return;
-            //}
-            //sw.Start();
-            ////mostramos una notificación
-            //await notificator.Notify(
-            //        ToastNotificationType.Info,
-            //        "SI", String.Format("pasaron {0} ms", sw.ElapsedMilliseconds), TimeSpan.FromSeconds(.5));
-
-            ////CRUCE
-            //var StartBeacon = new Tuple<ushort, string>(53847, Proximity.Immediate.ToString());
-            //var EndBeacon = new Tuple<ushort, string>(40796, Proximity.Immediate.ToString());
-
-            ////comienzo del cruce
-            //if(CROSS == "NO" && beacons.Contain(StartBeacon))
-            //{
-            //    sw.Restart();
-            //    CROSS = "BEGAN";
-            //    Toast("COMIENZO CRUCE");
-            //    return;
-            //}
-            //if(CROSS == "BEGAN" && beacons.Contain(EndBeacon))
-            //{
-            //    sw.Stop();
-            //    Toast(String.Format("FIN CRUCE en {0} seg", sw.Elapsed.TotalSeconds));
-
-            //    //cruce satisfactorio (emergencia
-            //    if(sw.Elapsed.TotalSeconds < 10)
-            //        Toast("CRUCE DETECTADO");
-
-            //    //todo: revisar esto
-            //    CROSS = "NO";
-            //}
         }
-
-        //todo: move this somewhere else
-        static string CROSS = "NO";
 
         //static Tuple<ushort, string> TupleFrom
 

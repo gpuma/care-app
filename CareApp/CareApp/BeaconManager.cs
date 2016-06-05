@@ -54,8 +54,11 @@ namespace CareApp
 
         private static async void Beacons_Ranged(object sender, IEnumerable<IBeacon> beacons)
         {
+            //temporales
+            Tuple<ushort, string> StartBeacon;
+            Tuple<ushort, string> EndBeacon;
             //todo: add enabled check (FIRST NEED TO ADD ENABLED FIElD)
-            foreach(var econfig in ConfigManager.EmergencyConfigs)
+            foreach (var econfig in ConfigManager.EmergencyConfigs)
             {
                 var currentTimer = timers[econfig.Id];
                 switch ((EmergencyType)econfig.EType)
@@ -80,8 +83,8 @@ namespace CareApp
                         break;
 
                     case EmergencyType.FastCross:
-                        var StartBeacon = new Tuple<ushort, string>(econfig.BeaconId1, econfig.Proximity);
-                        var EndBeacon = new Tuple<ushort, string>(econfig.BeaconId2, econfig.Proximity);
+                        StartBeacon = new Tuple<ushort, string>(econfig.BeaconId1, econfig.Proximity);
+                        EndBeacon = new Tuple<ushort, string>(econfig.BeaconId2, econfig.Proximity);
 
                         //comienzo del cruce
                         if (CROSS == "NO" && beacons.Contain(StartBeacon))
@@ -93,13 +96,38 @@ namespace CareApp
                         }
                         if (CROSS == "BEGAN" && beacons.Contain(EndBeacon))
                         {
-                            currentTimer.Stop();
-                            Toast(String.Format("FIN CRUCE en {0} seg", currentTimer.Elapsed.TotalSeconds));
-
                             //cruce satisfactorio (emergencia
-                            if (currentTimer.Elapsed.TotalSeconds <= econfig.Time / 1000.0)
-                                Toast("CRUCE DETECTADO");
+                            if (currentTimer.Elapsed.TotalSeconds > econfig.Time / 1000.0)
+                            {
+                                //se pasó del tiempo límite para completar el cruce
+                                CROSS = "NO";
+                                continue;
+                            }
+                            currentTimer.Stop();
+                            Toast("CRUCE DETECTADO");
                             //todo: revisar esto
+                            CROSS = "NO";
+                        }
+                        break;
+
+                    case EmergencyType.IncompleteCross:
+                        StartBeacon = new Tuple<ushort, string>(econfig.BeaconId1, econfig.Proximity);
+                        EndBeacon = new Tuple<ushort, string>(econfig.BeaconId2, econfig.Proximity);
+
+                        //comienzo del cruce
+                        if (CROSS == "NO" && beacons.Contain(StartBeacon))
+                        {
+                            currentTimer.Restart();
+                            CROSS = "BEGAN";
+                            Toast("COMIENZO CRUCE");
+                            return;
+                        }
+                        if (CROSS == "BEGAN" && !beacons.Contain(EndBeacon))
+                        {
+                            if (currentTimer.Elapsed.TotalSeconds <= econfig.Time / 1000.0)
+                                continue;
+                            currentTimer.Stop();
+                            Toast(String.Format("CRUCE INCOMPLETO en {0} seg", currentTimer.Elapsed.TotalSeconds));
                             CROSS = "NO";
                         }
                         break;

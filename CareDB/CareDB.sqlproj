@@ -70,5 +70,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts.sql" />
+    <None Include="create-RESTful-API.bat" />
   </ItemGroup>
 </Project>

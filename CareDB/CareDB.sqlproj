@@ -71,5 +71,6 @@
   <ItemGroup>
     <None Include="Scripts.sql" />
     <None Include="create-RESTful-API.bat" />
+    <None Include="CareDB.publish.xml" />
   </ItemGroup>
 </Project>

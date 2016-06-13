@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Configuracion]
 (
-	[Id] INT NOT NULL PRIMARY KEY, 
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
 	[Paciente] NVARCHAR(50) NOT NULL, 
 	[Tipo] INT NOT NULL, 
 	[BeaconId1] INT NOT NULL, 

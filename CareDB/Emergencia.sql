@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Emergencia]
 (
-	[Id] INT NOT NULL PRIMARY KEY, 
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
 	[Tipo] INT NOT NULL, 
 	[Timestamp] DATETIME NOT NULL, 
 	[Estado] INT NOT NULL, 

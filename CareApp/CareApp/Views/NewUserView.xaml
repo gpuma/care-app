@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+						 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+						 x:Class="CareApp.Views.NewUserView" Title="Nuevo usuario">
+	<ContentPage.Content>
+		<StackLayout>
+			<!--TODO: add combo with carers fetched, it should be hidden
+			//unless Patient option is selected-->
+			<Entry x:Name="txtUsername" Placeholder="Username"/>
+			<Entry x:Name="txtPassword" Placeholder="Password" IsPassword="true"/>
+			<Entry x:Name="txtNombre" Placeholder="Nombre"/>
+			<Entry x:Name="txtApellido" Placeholder="Apellido"/>
+			<Entry x:Name="txtTelefono" Placeholder="Telefono" Keyboard="Telephone"/>
+			<!--TODO: añadir grid para que el label y el switch estén juntos-->
+			<Label Text="Cuidante"/>
+			<Switch x:Name="bitCuidante"/>
+			<Button x:Name="btnNuevoUsuario" Text = "Crear usuario" Clicked="CrearUsuario" />
+			<ActivityIndicator x:Name="actLoading" IsVisible="false" IsRunning="false" />
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

@@ -7,11 +7,12 @@ namespace CareApp
     {
         public App()
         {
-            // The root page of your application
-            MainPage = new MainTabbedView();
-        }
+			// The root page of your application
+			//MainPage = new MainTabbedView();
+			MainPage = new NewUserView();
+		}
 
-        protected override void OnStart()
+		protected override void OnStart()
         {
             // Handle when your app starts
         }

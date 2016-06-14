@@ -1,8 +1,11 @@
-﻿namespace CareApp.Models
+﻿using Newtonsoft.Json;
+
+namespace CareApp.Models
 {
 	public class Usuario
 	{
-		public int Id { get; set; }
+		//check this shit
+		//public int Id { get; set; }
 		public string Nombre { get; set; }
 		public string Apellido { get; set; }
 		public string Username { get; set; }

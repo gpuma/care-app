@@ -1,18 +1,21 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Net.Http;
 using CareApp.Models;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 namespace CareApp.Data
 {
     public class RESTService
     {
         HttpClient client;
-        public List<Usuario> Users { get; set; }
-
+        //according to sandman2ctl default values
+        string propertyName = "resources";
+        string baseRESTUri = "http://192.168.0.100:5000/";
         public RESTService()
         {
             client = new HttpClient();
@@ -20,31 +23,65 @@ namespace CareApp.Data
             client.MaxResponseContentBufferSize = 256000;
         }
 
+        public async Task SaveUser(Usuario usr)
+        {
+            //todo: remove this shit
+            //usr = new Usuario
+            //{
+            //    Username = "thor",
+            //    Password = "thor",
+            //    Nombre = "hector",
+            //    Apellido = "beltran",
+            //    //todo: check this shit
+            //    Tipo = true,
+            //    //todo: añadir cuidante
+            //    Telefono = "666"
+            //};
+            var uri = baseRESTUri + "usuario";
+            try
+            {
+                var json = JsonConvert.SerializeObject(usr);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response;
+                response = await client.PostAsync(uri, content);
+                if(response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine(@"User saved");
+                }
+                else
+                {
+                    Debug.WriteLine(response.StatusCode.ToString());
+                }
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(@"				ERROR {0}", ex.Message);
+            }
+        }
+
         public async Task<List<Usuario>> GetUsers()
         {
-            Users = new List<Usuario>();
+            var users = new List<Usuario>();
             //no podemos usar localhost porque queremos que se conecte a la laptop
             //por eso usamos su IP local
             //todo: change ip to variable in a file
-            var uri = "http://192.168.0.100:5000/usuario";
+            var uri = baseRESTUri + "usuario";
             try
             {
                 var response = await client.GetAsync(uri);
                 if(response.IsSuccessStatusCode)
                 {
                     var jsonString = await response.Content.ReadAsStringAsync();
-                    var jsonResponse = JObject.Parse(jsonString);
-                    //resources string is due to sandman2ctl settings
-                    //var objResponse = (JObject)jsonResponse["resources"];
-                    var objResponse = jsonResponse["resources"];
-                    Users = JsonConvert.DeserializeObject<List<Usuario>>(objResponse.ToString());
+                    var parsedJson = JObject.Parse(jsonString);
+                    var objResponse = parsedJson[propertyName];
+                    users = JsonConvert.DeserializeObject<List<Usuario>>(objResponse.ToString());
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(@"				ERROR {0}", ex.Message);
+                Debug.WriteLine(@"				ERROR {0}", ex.Message);
             }
-            return Users;
+            return users;
         }
     }
 }

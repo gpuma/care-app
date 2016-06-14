@@ -19,22 +19,19 @@ namespace CareApp.Views
 		async void CrearUsuario(object sender, EventArgs args)
 		{
 			//todo: uncomment
-			//var nuevoUsuario = new Usuario
-			//{
-			//	Username = txtUsername.Text,
-			//	Password = txtPassword.Text,
-			//	Nombre = txtNombre.Text,
-			//	Apellido = txtApellido.Text,
-			//	//todo: check this shit
-			//	Tipo = bitCuidante.IsToggled,
-			//	//todo: añadir cuidante
-			//	Telefono = txtTelefono.Text
-			//};
+			var nuevoUsuario = new Usuario
+			{
+				Username = txtUsername.Text,
+				Password = txtPassword.Text,
+				Nombre = txtNombre.Text,
+				Apellido = txtApellido.Text,
+				//todo: check this shit
+				Tipo = bitCuidante.IsToggled,
+				//todo: añadir cuidante
+				Telefono = txtTelefono.Text
+			};
 			var rest = new Data.RESTService();
-			var plsboss = rest.GetUsers();
-			int a = 0;
+			rest.SaveUser(nuevoUsuario);
 		}
-
-
 	}
 }

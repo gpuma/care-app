@@ -10,6 +10,7 @@ using System.Diagnostics;
 
 namespace CareApp.Data
 {
+    //todo: volverla clase estática?
     public class RESTService
     {
         HttpClient client;
@@ -68,6 +69,34 @@ namespace CareApp.Data
                 Debug.WriteLine(@"				ERROR {0}", ex.Message);
             }
             return users;
+        }
+
+        public async Task<Usuario> Login(string username, string password)
+        {
+            var uri = baseRESTUri + "usuario/" + username;
+            Usuario user = null;
+            try
+            {
+                var response = await client.GetAsync(uri);
+                //error de conexión o algo
+                if (!response.IsSuccessStatusCode)
+                    return null;
+
+                var jsonString = await response.Content.ReadAsStringAsync();
+                var parsedJson = JObject.Parse(jsonString);
+                //if user doesn't exist it returns an object with only one property called message
+                if (parsedJson["message"] != null)
+                    return null;
+                //usuario existe
+                //todo: añadir pacientes
+                user = JsonConvert.DeserializeObject<Usuario>(parsedJson.ToString());
+                return user.Password == password ? user : null;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"				ERROR {0}", ex.Message);
+                return null;
+            }
         }
     }
 }

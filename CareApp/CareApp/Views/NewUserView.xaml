@@ -17,7 +17,7 @@
       <!--invisible hasta que se haga toggle-->
       <Entry x:Name="txtCuidante" Placeholder="Nombre cuidante" IsVisible="false"/>
 			<Button x:Name="btnNuevoUsuario" Text = "Crear usuario" Clicked="CrearUsuario" />
-			<ActivityIndicator x:Name="actLoading" IsVisible="false" IsRunning="false" />
+			<!--<ActivityIndicator x:Name="actLoading" IsVisible="false" IsRunning="false" />-->
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

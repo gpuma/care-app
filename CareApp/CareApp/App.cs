@@ -9,7 +9,7 @@ namespace CareApp
         {
 			// The root page of your application
 			//MainPage = new MainTabbedView();
-			MainPage = new NewUserView();
+			MainPage = new LoginView();
 		}
 
 		protected override void OnStart()

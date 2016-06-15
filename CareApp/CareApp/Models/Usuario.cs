@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace CareApp.Models
 {
@@ -13,5 +14,8 @@ namespace CareApp.Models
 		public bool Tipo { get; set; }
 		public string Cuidante { get; set; }
 		public string Telefono { get; set; }
+
+        [JsonIgnore]
+        public List<Usuario> Pacientes { get; set; }
 	}
 }

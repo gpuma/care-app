@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -48,7 +49,7 @@ namespace CareApp.Data
 
         public async Task<List<Usuario>> GetUsers()
         {
-            var users = new List<Usuario>();
+            List<Usuario> users = null;// = new List<Usuario>();
             //no podemos usar localhost porque queremos que se conecte a la laptop
             //por eso usamos su IP local
             //todo: change ip to variable in a file
@@ -56,19 +57,29 @@ namespace CareApp.Data
             try
             {
                 var response = await client.GetAsync(uri);
-                if(response.IsSuccessStatusCode)
-                {
-                    var jsonString = await response.Content.ReadAsStringAsync();
-                    var parsedJson = JObject.Parse(jsonString);
-                    var objResponse = parsedJson[propertyName];
-                    users = JsonConvert.DeserializeObject<List<Usuario>>(objResponse.ToString());
-                }
+                if (!response.IsSuccessStatusCode)
+                    return null;
+                var jsonString = await response.Content.ReadAsStringAsync();
+                var parsedJson = JObject.Parse(jsonString);
+                var objResponse = parsedJson[propertyName];
+                users = JsonConvert.DeserializeObject<List<Usuario>>(objResponse.ToString());
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(@"				ERROR {0}", ex.Message);
             }
             return users;
+        }
+
+
+        //Obtenemos los pacientes de un cuidante
+        public async Task<List<Usuario>> GetPatientsFromCarer(string username)
+        {
+            var allUsers = await GetUsers();
+            var patients = from patient in allUsers
+                           where patient.Cuidante == username
+                           select patient;
+            return new List<Usuario>(patients);
         }
 
         public async Task<Usuario> Login(string username, string password)
@@ -88,8 +99,9 @@ namespace CareApp.Data
                 if (parsedJson["message"] != null)
                     return null;
                 //usuario existe
-                //todo: añadir pacientes
                 user = JsonConvert.DeserializeObject<Usuario>(parsedJson.ToString());
+                //cargamos sus pacientes
+                user.Pacientes = await GetPatientsFromCarer(username);
                 return user.Password == password ? user : null;
             }
             catch (Exception ex)

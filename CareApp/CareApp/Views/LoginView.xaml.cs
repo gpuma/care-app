@@ -18,11 +18,12 @@ namespace CareApp.Views
         private async void btnLogin_Clicked(object sender, EventArgs e)
         {
             var rest = new Data.RESTService();
-            var success = await rest.Login(txtUsername.Text, txtPassword.Text);
-            if (success == null)
+            var user = await rest.Login(txtUsername.Text, txtPassword.Text);
+            if (user == null)
                 Notifier.Inform("error logueandose");
             else
                 Notifier.Inform("successful login");
+            await Navigation.PushAsync(new PatientsView(user));
         }
     }
 }

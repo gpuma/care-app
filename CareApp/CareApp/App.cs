@@ -7,9 +7,12 @@ namespace CareApp
     {
         public App()
         {
-			// The root page of your application
-			//MainPage = new MainTabbedView();
-			MainPage = new LoginView();
+            // The root page of your application
+            //navigation page necesario parar hacer pushasync
+            MainPage = new NavigationPage(new LoginView());
+            //var rest = new Data.RESTService();
+            //var user = rest.Login("vash", "vash").Result;
+            //MainPage = new PatientsView(user);
 		}
 
 		protected override void OnStart()

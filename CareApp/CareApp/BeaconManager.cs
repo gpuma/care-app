@@ -17,12 +17,6 @@ namespace CareApp
         //todo: check this shit
         static BeaconInitStatus status = BeaconInitStatus.Unknown;
 
-        //representación de un beacon
-        static Tuple<ushort, string> previous;// = new Tuple<ushort, string> (0000,"null");
-
-        //todo: meter esto a una clase estática
-        static IToastNotificator notificator = DependencyService.Get<IToastNotificator>();
-
         //cronometro
         //todo: ya no
         //static Stopwatch sw = new Stopwatch();
@@ -75,9 +69,8 @@ namespace CareApp
                         {
                             currentTimer.Stop();
                             //mostramos una notificación
-                            await notificator.Notify(
-                                    ToastNotificationType.Info,
-                                    "SI", String.Format("detectada proximidad de {0} seg.", currentTimer.ElapsedMilliseconds / 1000.0), TimeSpan.FromSeconds(.1));
+                            //todo: originalmente mostrada solo x .1 seg
+                            Notifier.Inform(String.Format("detectada proximidad de {0} seg.", currentTimer.ElapsedMilliseconds / 1000.0));
                             currentTimer.Reset();
                         }
                         break;
@@ -91,7 +84,7 @@ namespace CareApp
                         {
                             currentTimer.Restart();
                             CROSS = "BEGAN";
-                            Toast("COMIENZO CRUCE");
+                            Notifier.Inform("COMIENZO CRUCE");
                             return;
                         }
                         if (CROSS == "BEGAN" && beacons.Contain(EndBeacon))
@@ -104,7 +97,7 @@ namespace CareApp
                                 continue;
                             }
                             currentTimer.Stop();
-                            Toast("CRUCE DETECTADO");
+                            Notifier.Inform("CRUCE DETECTADO");
                             //todo: revisar esto
                             CROSS = "NO";
                         }
@@ -119,7 +112,7 @@ namespace CareApp
                         {
                             currentTimer.Restart();
                             CROSS = "BEGAN";
-                            Toast("COMIENZO CRUCE");
+                            Notifier.Inform("COMIENZO CRUCE");
                             return;
                         }
                         if (CROSS == "BEGAN" && !beacons.Contain(EndBeacon))
@@ -127,7 +120,7 @@ namespace CareApp
                             if (currentTimer.Elapsed.TotalSeconds <= econfig.Time / 1000.0)
                                 continue;
                             currentTimer.Stop();
-                            Toast(String.Format("CRUCE INCOMPLETO en {0} seg", currentTimer.Elapsed.TotalSeconds));
+                            Notifier.Inform(String.Format("CRUCE INCOMPLETO en {0} seg", currentTimer.Elapsed.TotalSeconds));
                             CROSS = "NO";
                         }
                         break;
@@ -168,11 +161,11 @@ namespace CareApp
             EstimoteManager.Instance.StopRanging(defaultRegion);
         }
 
-        static async void Toast(string msg)
-        {
-            await notificator.Notify(
-                    ToastNotificationType.Success,
-                    "SI", msg, TimeSpan.FromSeconds(1));
-        }
+        //static async void Toast(string msg)
+        //{
+        //    await notificator.Notify(
+        //            ToastNotificationType.Success,
+        //            "SI", msg, TimeSpan.FromSeconds(1));
+        //}
     }
 }

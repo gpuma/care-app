@@ -31,8 +31,12 @@ namespace CareApp.Views
                 Cuidante = txtCuidante.Text
 			};
 			var rest = new Data.RESTService();
-			rest.SaveUser(nuevoUsuario);
-		}
+			var success = await rest.SaveUser(nuevoUsuario);
+            if (success)
+                Notifier.Inform("Usuario creado correctamente.");
+            else
+                Notifier.Inform("No se puedo crear el usuario.");
+        }
 
         private void bitPaciente_Toggled(object sender, ToggledEventArgs e)
         {

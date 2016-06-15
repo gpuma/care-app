@@ -23,7 +23,7 @@ namespace CareApp.Data
             client.MaxResponseContentBufferSize = 256000;
         }
 
-        public async Task SaveUser(Usuario usr)
+        public async Task<bool> SaveUser(Usuario usr)
         {
             var uri = baseRESTUri + "usuario";
             try
@@ -33,17 +33,15 @@ namespace CareApp.Data
                 HttpResponseMessage response;
                 response = await client.PostAsync(uri, content);
                 if(response.IsSuccessStatusCode)
-                {
                     Debug.WriteLine(@"User saved");
-                }
                 else
-                {
                     Debug.WriteLine(response.StatusCode.ToString());
-                }
+                return response.IsSuccessStatusCode;
             }
             catch(Exception ex)
             {
                 Debug.WriteLine(@"				ERROR {0}", ex.Message);
+                return false;
             }
         }
 

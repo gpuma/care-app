@@ -10,10 +10,12 @@
 			<Entry x:Name="txtPassword" Placeholder="Password" IsPassword="true"/>
 			<Entry x:Name="txtNombre" Placeholder="Nombre"/>
 			<Entry x:Name="txtApellido" Placeholder="Apellido"/>
-			<Entry x:Name="txtTelefono" Placeholder="Telefono" Keyboard="Telephone"/>
+			<Entry x:Name="txtTelefono" Placeholder="Telefono" Keyboard="Telephone" />
 			<!--TODO: añadir grid para que el label y el switch estén juntos-->
-			<Label Text="Cuidante"/>
-			<Switch x:Name="bitCuidante"/>
+			<Label Text="Paciente?"/>
+			<Switch x:Name="bitPaciente" Toggled="bitPaciente_Toggled"/>
+      <!--invisible hasta que se haga toggle-->
+      <Entry x:Name="txtCuidante" Placeholder="Nombre cuidante" IsVisible="false"/>
 			<Button x:Name="btnNuevoUsuario" Text = "Crear usuario" Clicked="CrearUsuario" />
 			<ActivityIndicator x:Name="actLoading" IsVisible="false" IsRunning="false" />
 		</StackLayout>

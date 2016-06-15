@@ -25,18 +25,6 @@ namespace CareApp.Data
 
         public async Task SaveUser(Usuario usr)
         {
-            //todo: remove this shit
-            //usr = new Usuario
-            //{
-            //    Username = "thor",
-            //    Password = "thor",
-            //    Nombre = "hector",
-            //    Apellido = "beltran",
-            //    //todo: check this shit
-            //    Tipo = true,
-            //    //todo: añadir cuidante
-            //    Telefono = "666"
-            //};
             var uri = baseRESTUri + "usuario";
             try
             {

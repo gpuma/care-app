@@ -18,20 +18,25 @@ namespace CareApp.Views
 
 		async void CrearUsuario(object sender, EventArgs args)
 		{
-			//todo: uncomment
-			var nuevoUsuario = new Usuario
-			{
-				Username = txtUsername.Text,
-				Password = txtPassword.Text,
-				Nombre = txtNombre.Text,
-				Apellido = txtApellido.Text,
-				//todo: check this shit
-				Tipo = bitCuidante.IsToggled,
-				//todo: añadir cuidante
-				Telefono = txtTelefono.Text
+            //todo: añadir check y feedback de inserción
+            var nuevoUsuario = new Usuario
+            {
+                Username = txtUsername.Text,
+                Password = txtPassword.Text,
+                Nombre = txtNombre.Text,
+                Apellido = txtApellido.Text,
+                //si es paciente no es cuidante y viceversa
+                Tipo = !bitPaciente.IsToggled,
+                Telefono = txtTelefono.Text,
+                Cuidante = txtCuidante.Text
 			};
 			var rest = new Data.RESTService();
 			rest.SaveUser(nuevoUsuario);
 		}
-	}
+
+        private void bitPaciente_Toggled(object sender, ToggledEventArgs e)
+        {
+            txtCuidante.IsVisible = e.Value;
+        }
+    }
 }

@@ -15,17 +15,22 @@
           ProximityForPeriodAtTime,
           FastCross,
           IncompleteCross-->
-          <!--
+          
           <x:String>Proximidad por periodo</x:String>
           <x:String>Proximidad por periodo a hora</x:String>
           <x:String>Cruce rápido</x:String>
           <x:String>Cruce incompleto</x:String>
-          -->
+          
         </Picker.Items>
       </Picker>
       <Button x:Name="btnBeaconId1" Text="{Binding BeaconId1}" Clicked="btnBeaconId1_Clicked"/>
       <Button x:Name="btnBeaconId2" Text="{Binding BeaconId2}" Clicked="btnBeaconId2_Clicked" IsEnabled="False"/>
       <Picker x:Name="pckRange" SelectedIndexChanged="pckRange_SelectedIndexChanged">
+        <!--Proximity.Unknown = 0
+        Proximity.Immediate = 1
+        Proximity.Near = 2
+        Proximity.Far = 3
+        since we cannot use unknown we have to do +1-->
         <Picker.Items>
           <x:String>Inmediato</x:String>
           <x:String>Cerca</x:String>

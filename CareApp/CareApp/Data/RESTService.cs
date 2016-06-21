@@ -71,6 +71,32 @@ namespace CareApp.Data
             return users;
         }
 
+        public async Task<bool> SaveConfig(EmergencyConfig newConfig)
+        {
+            var uri = baseRESTUri + "configuracion";
+            try
+            {
+                var json = JsonConvert.SerializeObject(newConfig);
+                //we need to remove the id field cause it's auto-incremented
+                var tempObj = JObject.Parse(json);
+                tempObj["Id"].Parent.Remove();
+                json = tempObj.ToString();
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response;
+                response = await client.PostAsync(uri, content);
+                if (response.IsSuccessStatusCode)
+                    Debug.WriteLine(@"CONFIGURACIÓN saved");
+                else
+                    Debug.WriteLine(response.StatusCode.ToString());
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"				ERROR {0}", ex.Message);
+                return false;
+            }
+        }
+
 
         //Obtenemos los pacientes de un cuidante
         public async Task<List<Usuario>> GetPatientsFromCarer(string username)

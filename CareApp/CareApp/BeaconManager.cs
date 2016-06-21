@@ -23,7 +23,7 @@ namespace CareApp
 
         //diccionario de stopwatches
         //el índice es la id de un beacon config
-        static Dictionary<string, Stopwatch> timers;
+        static Dictionary<int, Stopwatch> timers;
 
         static string CROSS = "NO";
         public static bool EnableRanging { get; set; }
@@ -45,7 +45,7 @@ namespace CareApp
         {
             //we limit it to the size of our configs
             //might need to change this when we can add or delete configs
-            timers = new Dictionary<string, Stopwatch>(ConfigManager.EmergencyConfigs.Count);
+            timers = new Dictionary<int, Stopwatch>(ConfigManager.EmergencyConfigs.Count);
             foreach (var econfig in ConfigManager.EmergencyConfigs)
                 timers[econfig.Id] = new Stopwatch();
         }
@@ -54,25 +54,24 @@ namespace CareApp
         {
             if (!EnableRanging)
                 return;
-
             //temporales
-            Tuple<ushort, string> StartBeacon;
-            Tuple<ushort, string> EndBeacon;
+            Tuple<ushort, int> StartBeacon;
+            Tuple<ushort, int> EndBeacon;
             //todo: add enabled check (FIRST NEED TO ADD ENABLED FIElD)
             foreach (var econfig in ConfigManager.EmergencyConfigs)
             {
                 var currentTimer = timers[econfig.Id];
-                switch ((EmergencyType)econfig.EType)
+                switch ((EmergencyType)econfig.Tipo)
                 {
                     case EmergencyType.ProximityForPeriod:
-                        var targetBeacon = new Tuple<ushort, string>(econfig.BeaconId1, econfig.Proximity);
+                        var targetBeacon = new Tuple<ushort, int>(econfig.BeaconId1, econfig.Rango);
                         if (!beacons.Contain(targetBeacon))
                         {
                             currentTimer.Reset();
                             continue;
                         }
                         currentTimer.Start();
-                        if (currentTimer.ElapsedMilliseconds >= econfig.Time)
+                        if (currentTimer.ElapsedMilliseconds >= econfig.Tiempo)
                         {
                             currentTimer.Stop();
                             //mostramos una notificación
@@ -83,8 +82,8 @@ namespace CareApp
                         break;
 
                     case EmergencyType.FastCross:
-                        StartBeacon = new Tuple<ushort, string>(econfig.BeaconId1, econfig.Proximity);
-                        EndBeacon = new Tuple<ushort, string>(econfig.BeaconId2, econfig.Proximity);
+                        StartBeacon = new Tuple<ushort, int>(econfig.BeaconId1, econfig.Rango);
+                        EndBeacon = new Tuple<ushort, int>(econfig.BeaconId2, econfig.Rango);
 
                         //comienzo del cruce
                         if (CROSS == "NO" && beacons.Contain(StartBeacon))
@@ -97,7 +96,7 @@ namespace CareApp
                         if (CROSS == "BEGAN" && beacons.Contain(EndBeacon))
                         {
                             //cruce satisfactorio (emergencia
-                            if (currentTimer.Elapsed.TotalSeconds > econfig.Time / 1000.0)
+                            if (currentTimer.Elapsed.TotalSeconds > econfig.Tiempo / 1000.0)
                             {
                                 //se pasó del tiempo límite para completar el cruce
                                 CROSS = "NO";
@@ -111,8 +110,8 @@ namespace CareApp
                         break;
 
                     case EmergencyType.IncompleteCross:
-                        StartBeacon = new Tuple<ushort, string>(econfig.BeaconId1, econfig.Proximity);
-                        EndBeacon = new Tuple<ushort, string>(econfig.BeaconId2, econfig.Proximity);
+                        StartBeacon = new Tuple<ushort, int>(econfig.BeaconId1, econfig.Rango);
+                        EndBeacon = new Tuple<ushort, int>(econfig.BeaconId2, econfig.Rango);
 
                         //comienzo del cruce
                         if (CROSS == "NO" && beacons.Contain(StartBeacon))
@@ -124,7 +123,7 @@ namespace CareApp
                         }
                         if (CROSS == "BEGAN" && !beacons.Contain(EndBeacon))
                         {
-                            if (currentTimer.Elapsed.TotalSeconds <= econfig.Time / 1000.0)
+                            if (currentTimer.Elapsed.TotalSeconds <= econfig.Tiempo / 1000.0)
                                 continue;
                             currentTimer.Stop();
                             Notifier.Inform(String.Format("CRUCE INCOMPLETO en {0} seg", currentTimer.Elapsed.TotalSeconds));
@@ -135,16 +134,16 @@ namespace CareApp
             }
         }
 
-        //static Tuple<ushort, string> TupleFrom
+        //static Tuple<ushort, int> TupleFrom
 
         //comparamos el beacon con nuestra tupla q representa a un beacon
-        static bool IsEqual(this IBeacon b, Tuple<ushort,string> bt)
+        static bool IsEqual(this IBeacon b, Tuple<ushort,int> bt)
         {
-            return (b.Major == bt.Item1 && b.Proximity.ToString() == bt.Item2);
+            return (b.Major == bt.Item1 && (int)b.Proximity == bt.Item2);
         }
 
         //para ver si la lista de beacons contiene a la tupla q representa a nuestro beacon
-        static bool Contain(this IEnumerable<IBeacon> beacons, Tuple<ushort, string> bt)
+        static bool Contain(this IEnumerable<IBeacon> beacons, Tuple<ushort, int> bt)
         {
             foreach(var b in beacons)
             {

@@ -32,17 +32,45 @@ namespace CareApp.Views
 
         private void pckRange_SelectedIndexChanged(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         private void pckConfigType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            btnBeaconId2.IsEnabled = (pckConfigType.SelectedIndex == 2 || pckConfigType.SelectedIndex == 3);
         }
 
-        private void btnAddConfig_Clicked(object sender, EventArgs e)
+        private async void btnAddConfig_Clicked(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            var newConfig = new EmergencyConfig()
+            {
+                //todo: cambiar y leer el paciente real
+                Paciente = "elvis",
+                Tipo = pckConfigType.SelectedIndex,
+                BeaconId1 = ushort.Parse(btnBeaconId1.Text),
+                BeaconId2 = ushort.Parse(btnBeaconId2.Text),
+                Rango = pckRange.SelectedIndex + 1,
+                //la bd está en miliseg.
+                Tiempo = Int32.Parse(txtTime.Text) * 1000,
+                Nombre = txtName.Text
+            };
+            //var newConfig = new EmergencyConfig()
+            //{
+            //    Paciente = "chio",
+            //    Tipo = 2,
+            //    BeaconId1 = 40796,
+            //    BeaconId2 = 53847,
+            //    Rango = 1,
+            //    //la bd está en miliseg.
+            //    Tiempo = 2 * 1000,
+            //    Nombre = "las escaleras"
+            //};
+            var rest = new Data.RESTService();
+            var success = await rest.SaveConfig(newConfig);
+            if (success)
+                Notifier.Inform("Configuración creada correctamente.");
+            else
+                Notifier.Inform("No se puedo crear la configuración.");
         }
         private async void btnBeaconId1_Clicked(object sender, EventArgs e)
         {

@@ -7,7 +7,7 @@ namespace CareApp.Views
         public MainTabbedView()
         {
             InitializeComponent();
-            this.Children.Add(new BeaconsView { Title = "Beacons" });
+            //this.Children.Add(new BeaconsView { Title = "Beacons" });
         }
     }
 }

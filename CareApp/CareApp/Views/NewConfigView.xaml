@@ -23,8 +23,8 @@
           -->
         </Picker.Items>
       </Picker>
-      <Button x:Name="btnBeaconId1" Text="Beacon #1" Clicked="btnBeaconId1_Clicked"/>
-      <Button x:Name="btnBeaconId2" Text="Beacon #2" Clicked="btnBeaconId2_Clicked" IsEnabled="False"/>
+      <Button x:Name="btnBeaconId1" Text="{Binding BeaconId1}" Clicked="btnBeaconId1_Clicked"/>
+      <Button x:Name="btnBeaconId2" Text="{Binding BeaconId2}" Clicked="btnBeaconId2_Clicked" IsEnabled="False"/>
       <Picker x:Name="pckRange" SelectedIndexChanged="pckRange_SelectedIndexChanged">
         <Picker.Items>
           <x:String>Inmediato</x:String>

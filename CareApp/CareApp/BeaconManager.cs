@@ -26,11 +26,15 @@ namespace CareApp
         static Dictionary<string, Stopwatch> timers;
 
         static string CROSS = "NO";
+        public static bool EnableRanging { get; set; }
         
         //corre la primera vez q se usa la clase estática
         static BeaconManager()
         {
             EstimoteManager.Instance.Ranged += Beacons_Ranged;
+
+            EnableRanging = true;
+
             //we load the emergency configurations 
             ConfigManager.LoadEmergencyConfigs();
             //initialize stopwatches for each config
@@ -48,6 +52,9 @@ namespace CareApp
 
         private static async void Beacons_Ranged(object sender, IEnumerable<IBeacon> beacons)
         {
+            if (!EnableRanging)
+                return;
+
             //temporales
             Tuple<ushort, string> StartBeacon;
             Tuple<ushort, string> EndBeacon;

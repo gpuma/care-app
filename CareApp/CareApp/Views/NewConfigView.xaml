@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CareApp.Views.NewConfigView"
+             x:Title="Nueva configuración de emergencia">
+  <ContentPage.Content>
+    <StackLayout>
+      <!--TODO: add combo with carers fetched, it should be hidden
+			//unless Patient option is selected-->
+      <Entry x:Name="txtName" Placeholder="Nombre"/>
+      <Picker x:Name="pckConfigType" SelectedIndexChanged="pckConfigType_SelectedIndexChanged">
+        <Picker.Items>
+          <!--Manually change this is if constants are changed-->
+          <!--ProximityForPeriod,
+          ProximityForPeriodAtTime,
+          FastCross,
+          IncompleteCross-->
+          <!--
+          <x:String>Proximidad por periodo</x:String>
+          <x:String>Proximidad por periodo a hora</x:String>
+          <x:String>Cruce rápido</x:String>
+          <x:String>Cruce incompleto</x:String>
+          -->
+        </Picker.Items>
+      </Picker>
+      <Button x:Name="btnBeaconId1" Text="Beacon #1" Clicked="btnBeaconId1_Clicked"/>
+      <Button x:Name="btnBeaconId2" Text="Beacon #2" Clicked="btnBeaconId2_Clicked" IsEnabled="False"/>
+      <Picker x:Name="pckRange" SelectedIndexChanged="pckRange_SelectedIndexChanged">
+        <Picker.Items>
+          <x:String>Inmediato</x:String>
+          <x:String>Cerca</x:String>
+          <x:String>Lejos</x:String>
+        </Picker.Items>
+      </Picker>
+      <Entry x:Name="txtTime" Placeholder="Tiempo en seg." Keyboard="Numeric"/>
+      <!--todo: add hour selector for proximity at time-->
+      <Button x:Name="btnAddConfig" Text = "Guardar" Clicked="btnAddConfig_Clicked"/>
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>

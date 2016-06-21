@@ -47,6 +47,29 @@ namespace CareApp.Data
             }
         }
 
+        public async Task<List<EmergencyConfig>> GetConfigs()
+        {
+            List<EmergencyConfig> configs = null;
+            //no podemos usar localhost porque queremos que se conecte a la laptop
+            //por eso usamos su IP local
+            var uri = baseRESTUri + "configuracion";
+            try
+            {
+                var response = await client.GetAsync(uri);
+                if (!response.IsSuccessStatusCode)
+                    return null;
+                var jsonString = await response.Content.ReadAsStringAsync();
+                var parsedJson = JObject.Parse(jsonString);
+                var objResponse = parsedJson[propertyName];
+                configs = JsonConvert.DeserializeObject<List<EmergencyConfig>>(objResponse.ToString());
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"				ERROR {0}", ex.Message);
+            }
+            return configs;
+        }
+
         public async Task<List<Usuario>> GetUsers()
         {
             List<Usuario> users = null;// = new List<Usuario>();
@@ -108,6 +131,16 @@ namespace CareApp.Data
             return new List<Usuario>(patients);
         }
 
+        //Obtenemos las configuraciones de un paciente
+        public async Task<List<EmergencyConfig>> GetConfigsFromPatient(string username)
+        {
+            var allConfigs = await GetConfigs();
+            var configs = from config in allConfigs
+                           where config.Paciente == username
+                           select config;
+            return new List<EmergencyConfig>(configs);
+        }
+
         public async Task<Usuario> Login(string username, string password)
         {
             var uri = baseRESTUri + "usuario/" + username;
@@ -126,9 +159,16 @@ namespace CareApp.Data
                     return null;
                 //usuario existe
                 user = JsonConvert.DeserializeObject<Usuario>(parsedJson.ToString());
+
+                if (user.Password != password)
+                    return null;
+
                 //cargamos sus pacientes
                 user.Pacientes = await GetPatientsFromCarer(username);
-                return user.Password == password ? user : null;
+                //cargamos las configuraciones de emergencia (si es que hay)
+                user.Configuraciones = await GetConfigsFromPatient(username);
+
+                return user;
             }
             catch (Exception ex)
             {

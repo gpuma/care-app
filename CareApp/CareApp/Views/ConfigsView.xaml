@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CareApp.Views.ConfigsView">
+  <ContentPage.Content>
+    <StackLayout>
+      <ScrollView Orientation="Vertical" VerticalOptions="FillAndExpand">
+        <ListView x:Name="lstConfigs" ItemsSource="{Binding Configuraciones}" VerticalOptions="FillAndExpand"
+				HasUnevenRows="true">
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell>
+                <ViewCell.View>
+                  <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand">
+                    <Label Text="{Binding Nombre}"/>
+                    <!--<Label Text="{Binding Apellido}"/>-->
+                  </StackLayout>
+                </ViewCell.View>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+      </ScrollView>
+      <!--<Button x:Name="btnAddPatient" Text="Add patient" Clicked="OnAddPatient_Clicked" BackgroundColor="#60E2C0"
+			TextColor="White" FontSize="20"/>-->
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>

@@ -16,11 +16,12 @@ namespace CareApp.Views
         //no podemos tener campos que apunten a ref
         public ushort BeaconId1 { get; set; }
         public ushort BeaconId2 { get; set; }
+        Usuario paciente;
 
-        public NewConfigView()
+        public NewConfigView(Usuario paciente)
         {
             InitializeComponent();
-            //BindingContext = this;
+            this.paciente = paciente;
         }
 
         //todo: la solución más chancha que existe
@@ -28,11 +29,6 @@ namespace CareApp.Views
         {
             BindingContext = null;
             BindingContext = this;
-        }
-
-        private void pckRange_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //throw new NotImplementedException();
         }
 
         private void pckConfigType_SelectedIndexChanged(object sender, EventArgs e)
@@ -44,8 +40,7 @@ namespace CareApp.Views
         {
             var newConfig = new EmergencyConfig()
             {
-                //todo: cambiar y leer el paciente real
-                Paciente = "elvis",
+                Paciente = paciente.Username,
                 Tipo = pckConfigType.SelectedIndex,
                 BeaconId1 = ushort.Parse(btnBeaconId1.Text),
                 BeaconId2 = ushort.Parse(btnBeaconId2.Text),
@@ -54,17 +49,6 @@ namespace CareApp.Views
                 Tiempo = Int32.Parse(txtTime.Text) * 1000,
                 Nombre = txtName.Text
             };
-            //var newConfig = new EmergencyConfig()
-            //{
-            //    Paciente = "chio",
-            //    Tipo = 2,
-            //    BeaconId1 = 40796,
-            //    BeaconId2 = 53847,
-            //    Rango = 1,
-            //    //la bd está en miliseg.
-            //    Tiempo = 2 * 1000,
-            //    Nombre = "las escaleras"
-            //};
             var rest = new Data.RESTService();
             var success = await rest.SaveConfig(newConfig);
             if (success)

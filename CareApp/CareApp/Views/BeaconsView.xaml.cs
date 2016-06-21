@@ -6,8 +6,6 @@ using Xamarin.Forms;
 using CareApp.Models;
 using System.Diagnostics;
 using Plugin.Toasts;
-//using System.Threading.Tasks;
-//using System.Threading;
 
 namespace CareApp.Views
 {
@@ -64,27 +62,6 @@ namespace CareApp.Views
             await Navigation.PopAsync();
         }
 
-        //void HandleReceivedMessages()
-        //{
-        //    MessagingCenter.Subscribe<TickedMessage>(this, "TickedMessage", message => {
-        //        //todo: check this async shit
-        //        Device.BeginInvokeOnMainThread(async () => {
-        //            //lblText.Text = message.Message;
-        //            await notificator.Notify(
-        //                ToastNotificationType.Info,
-        //                "CHI", message.Message, TimeSpan.FromSeconds(1));
-        //            });
-        //    });
-
-        //    MessagingCenter.Subscribe<CancelledMessage>(this, "CancelledMessage", message => {
-        //        Device.BeginInvokeOnMainThread(async () => {
-        //            await notificator.Notify(
-        //                ToastNotificationType.Info,
-        //                "NO", "Cancelled", TimeSpan.FromSeconds(1));
-        //        });
-        //    });
-        //}
-
         private void Beacons_Ranged(object s, IEnumerable<IBeacon> beacons)
         {
             //reiniciamos la lista cada en cada evento de detección
@@ -102,51 +79,6 @@ namespace CareApp.Views
             }
             Debug.WriteLine(String.Format("found {0}", Beacons.Count));
         }
-
-        ////para iniciar o detener el escaneo de beacons
-        //async void OnScan_Clicked(object sender, EventArgs args)
-        //{
-        //    //todo: chequear si cada vez que se clickea debe hacerse esto
-        //    //inicializamos el plugin
-        //    var status = await EstimoteManager.Instance.Initialize();
-        //    if(status!=  BeaconInitStatus.Success)
-        //    {
-        //        throw new Exception("unable to start beacon manager");
-        //    }         
-
-        //    //simple toggle
-        //    isScanning = !isScanning;
-        //    if(isScanning)
-        //    {
-        //        EstimoteManager.Instance.StartRanging(defaultRegion);
-        //        btnScan.Text = "Parar";
-        //    }
-        //    else
-        //    {
-        //        EstimoteManager.Instance.StopRanging(defaultRegion);
-        //        btnScan.Text = "Escanear";
-        //    }
-        //}
-
-        ////cuando se le da click a un beacon
-        //async void OnList_Tapped(object sender, EventArgs args)
-        //{
-
-        //}
-
-        //void OnStart_Clicked(object sender, EventArgs args)
-        //{
-        //    BeaconManager.Start();
-        //    //var msg = new StartRunningTaskMessage();
-        //    //MessagingCenter.Send(msg, "StartRunningTaskMessage");
-        //}
-
-        //void OnStop_Clicked(object sender, EventArgs args)
-        //{
-        //    BeaconManager.Stop();
-        //    //var msg = new StopRunningTaskMessage();
-        //    //MessagingCenter.Send(msg, "StopRunningTaskMessage");
-        //}
 
         protected override void OnAppearing()
         {

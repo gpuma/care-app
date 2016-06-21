@@ -14,12 +14,7 @@ namespace CareApp
     public static class BeaconManager
     {
         static BeaconRegion defaultRegion = new BeaconRegion("test-region", "B9407F30-F5F8-466E-AFF9-25556B57FE6D");
-        //todo: check this shit
         static BeaconInitStatus status = BeaconInitStatus.Unknown;
-
-        //cronometro
-        //todo: ya no
-        //static Stopwatch sw = new Stopwatch();
 
         //diccionario de stopwatches
         //el índice es la id de un beacon config
@@ -104,7 +99,6 @@ namespace CareApp
                             }
                             currentTimer.Stop();
                             Notifier.Inform("CRUCE DETECTADO");
-                            //todo: revisar esto
                             CROSS = "NO";
                         }
                         break;

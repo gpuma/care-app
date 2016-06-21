@@ -17,5 +17,7 @@ namespace CareApp.Models
 
         [JsonIgnore]
         public List<Usuario> Pacientes { get; set; }
-	}
+        [JsonIgnore]
+        public List<EmergencyConfig> Configuraciones { get; set; }
+    }
 }

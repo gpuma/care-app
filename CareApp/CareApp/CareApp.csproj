@@ -49,6 +49,9 @@
     <Compile Include="Views\BeaconsView.xaml.cs">
       <DependentUpon>BeaconsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ConfigsView.xaml.cs">
+      <DependentUpon>ConfigsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -170,6 +173,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\NewConfigView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConfigsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

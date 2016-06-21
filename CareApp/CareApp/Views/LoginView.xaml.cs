@@ -23,7 +23,12 @@ namespace CareApp.Views
                 Notifier.Inform("error logueandose");
             else
                 Notifier.Inform("successful login");
-            await Navigation.PushAsync(new PatientsView(user));
+
+            //si es cuidante o paciente
+            if(user.Tipo)
+                await Navigation.PushAsync(new PatientsView(user));
+            else
+                await Navigation.PushAsync(new ConfigsView(user));
         }
     }
 }

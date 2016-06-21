@@ -5,27 +5,20 @@
              x:Title="Nueva configuración de emergencia">
   <ContentPage.Content>
     <StackLayout>
-      <!--TODO: add combo with carers fetched, it should be hidden
-			//unless Patient option is selected-->
       <Entry x:Name="txtName" Placeholder="Nombre"/>
       <Picker x:Name="pckConfigType" SelectedIndexChanged="pckConfigType_SelectedIndexChanged">
         <Picker.Items>
           <!--Manually change this is if constants are changed-->
-          <!--ProximityForPeriod,
-          ProximityForPeriodAtTime,
-          FastCross,
-          IncompleteCross-->
-          
           <x:String>Proximidad por periodo</x:String>
           <x:String>Proximidad por periodo a hora</x:String>
           <x:String>Cruce rápido</x:String>
           <x:String>Cruce incompleto</x:String>
-          
         </Picker.Items>
       </Picker>
+      <!--todo: aññdir texto describiendo-->
       <Button x:Name="btnBeaconId1" Text="{Binding BeaconId1}" Clicked="btnBeaconId1_Clicked"/>
       <Button x:Name="btnBeaconId2" Text="{Binding BeaconId2}" Clicked="btnBeaconId2_Clicked" IsEnabled="False"/>
-      <Picker x:Name="pckRange" SelectedIndexChanged="pckRange_SelectedIndexChanged">
+      <Picker x:Name="pckRange">
         <!--Proximity.Unknown = 0
         Proximity.Immediate = 1
         Proximity.Near = 2

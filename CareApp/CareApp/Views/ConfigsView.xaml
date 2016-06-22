@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:fab="clr-namespace:FAB.Forms;assembly=FAB.Forms"
              x:Class="CareApp.Views.ConfigsView">
   <ContentPage.Content>
     <StackLayout>
@@ -24,5 +25,7 @@
       <!--<Button x:Name="btnAddPatient" Text="Add patient" Clicked="OnAddPatient_Clicked" BackgroundColor="#60E2C0"
 			TextColor="White" FontSize="20"/>-->
     </StackLayout>
+    <!--<fab:FloatingActionButton x:Name="fabBtn" Source="plus.png" Size="Normal"/>-->
+				<!--Clicked="Handle_FabClicked"-->
   </ContentPage.Content>
 </ContentPage>

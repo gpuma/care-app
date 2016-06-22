@@ -16,6 +16,8 @@ namespace CareApp.Models
 		public string Telefono { get; set; }
 
         [JsonIgnore]
+        public string TelCuidante { get; set; }
+        [JsonIgnore]
         public List<Usuario> Pacientes { get; set; }
         [JsonIgnore]
         public List<EmergencyConfig> Configuraciones { get; set; }

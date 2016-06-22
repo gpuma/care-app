@@ -1,19 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using Xamarin.Forms;
+using CareApp.Models;
 
 namespace CareApp.Views
 {
     public partial class PatientAlertView : ContentPage
     {
         PatientAlertViewModel vm = new PatientAlertViewModel();
-        public PatientAlertView()
+        Usuario user;
+        public PatientAlertView(Usuario user)
         {
             InitializeComponent();
+            this.user = user;
 
             //el tiempo de cuenta a atrás con su respectivo mensaje
             vm.Tiempo = 5;
@@ -42,12 +41,19 @@ namespace CareApp.Views
 
         private void btnAyuda_Clicked(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            MakeCall();
+        }
+
+        private void MakeCall()
+        {
+            //abre la interfaz de telefono nativa al usuario
+            Device.OpenUri(new Uri(String.Format("tel:{0}", this.user.TelCuidante)));
+            Navigation.PopAsync();
         }
 
         private void btnOk_Clicked(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            Navigation.PopAsync();
         }
     }
 

@@ -18,6 +18,8 @@ namespace CareApp.Data
         //according to sandman2ctl default values
         string propertyName = "resources";
         string baseRESTUri = "http://192.168.0.100:5000/";
+        //la cacheamos en memoria
+        List<Usuario> allUsers;
         public RESTService()
         {
             client = new HttpClient();
@@ -178,7 +180,7 @@ namespace CareApp.Data
         //Obtenemos los pacientes de un cuidante
         public async Task<List<Usuario>> GetPatientsFromCarer(string username)
         {
-            var allUsers = await GetUsers();
+            allUsers = await GetUsers();
             var patients = from patient in allUsers
                            where patient.Cuidante == username
                            select patient;
@@ -231,7 +233,11 @@ namespace CareApp.Data
                 user.Pacientes = await GetPatientsFromCarer(username);
                 //cargamos las configuraciones de emergencia (si es que hay)
                 user.Configuraciones = await GetConfigsFromPatient(username);
-
+                //si es paciente obtenemos el telefono de su cuidante
+                if (!user.Tipo)
+                    user.TelCuidante = (from u in allUsers
+                                        where u.Username == user.Cuidante
+                                        select u.Telefono).FirstOrDefault();
                 return user;
             }
             catch (Exception ex)

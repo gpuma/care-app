@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Estimotes;
 using System.Diagnostics;
-using Plugin.Toasts;
-using Xamarin.Forms;
 using CareApp.Models;
 
 namespace CareApp
@@ -22,16 +17,23 @@ namespace CareApp
 
         static string CROSS = "NO";
         public static bool EnableRanging { get; set; }
-        
+
+        static Usuario user { get; set; }
+
         //corre la primera vez q se usa la clase estática
         static BeaconManager()
         {
+            EnableRanging = false;
             EstimoteManager.Instance.Ranged += Beacons_Ranged;
+        }
 
+        //debe ser llamado para que funcione
+        //recién con esto se puede acceder a las configs
+        public static void SetUser(Usuario usr)
+        {
+            EnableRanging = false;
+            user = usr;
             EnableRanging = true;
-
-            //we load the emergency configurations 
-            ConfigManager.LoadEmergencyConfigs();
             //initialize stopwatches for each config
             InitializeTimers();
         }
@@ -40,8 +42,8 @@ namespace CareApp
         {
             //we limit it to the size of our configs
             //might need to change this when we can add or delete configs
-            timers = new Dictionary<int, Stopwatch>(ConfigManager.EmergencyConfigs.Count);
-            foreach (var econfig in ConfigManager.EmergencyConfigs)
+            timers = new Dictionary<int, Stopwatch>(user.Configuraciones.Count);
+            foreach (var econfig in user.Configuraciones)
                 timers[econfig.Id] = new Stopwatch();
         }
 
@@ -53,7 +55,7 @@ namespace CareApp
             Tuple<ushort, int> StartBeacon;
             Tuple<ushort, int> EndBeacon;
             //todo: add enabled check (FIRST NEED TO ADD ENABLED FIElD)
-            foreach (var econfig in ConfigManager.EmergencyConfigs)
+            foreach (var econfig in user.Configuraciones)
             {
                 var currentTimer = timers[econfig.Id];
                 switch ((EmergencyType)econfig.Tipo)

@@ -89,6 +89,7 @@ namespace CareApp.Views
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
+            BeaconManager.EnableRanging = true;
             BeaconManager.Stop();
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace CareApp.Models
 {
@@ -14,7 +15,9 @@ namespace CareApp.Models
         //public string EType { get; set; }
         //el tipo fue revertido a int en vez de enum
         //xq no funciona muy bien en la serializacion
+        [JsonIgnore]
         int eType;
+
         public int Tipo
         {
             get

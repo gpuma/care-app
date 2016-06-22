@@ -27,3 +27,6 @@ insert into Usuario values ('Hernán','Puma','hernan','hernan',0,'vash','+510544
 insert into Usuario values ('Silvia','Tejada','silvia','silvia',0,'vash','+51958554460')
 
 select * from Usuario
+
+insert into Configuracion values ('chio',0,28927,null,1,2000,'baño')
+insert into Configuracion values ('chio',2,40796,53847,1,10000,'escaleras')

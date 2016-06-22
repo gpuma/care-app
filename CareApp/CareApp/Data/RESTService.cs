@@ -70,6 +70,27 @@ namespace CareApp.Data
             return configs;
         }
 
+        public async Task<List<Emergencia>> GetEmergencies()
+        {
+            List<Emergencia> emergencies = null;
+            var uri = baseRESTUri + "emergencia";
+            try
+            {
+                var response = await client.GetAsync(uri);
+                if (!response.IsSuccessStatusCode)
+                    return null;
+                var jsonString = await response.Content.ReadAsStringAsync();
+                var parsedJson = JObject.Parse(jsonString);
+                var objResponse = parsedJson[propertyName];
+                emergencies = JsonConvert.DeserializeObject<List<Emergencia>>(objResponse.ToString());
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"				ERROR {0}", ex.Message);
+            }
+            return emergencies;
+        }
+
         public async Task<List<Usuario>> GetUsers()
         {
             List<Usuario> users = null;// = new List<Usuario>();
@@ -94,16 +115,24 @@ namespace CareApp.Data
             return users;
         }
 
+        string RemoveIdFieldFromJson(string json)
+        {
+            //we need to remove the id field cause it's auto-incremented
+            var tempObj = JObject.Parse(json);
+            tempObj["Id"].Parent.Remove();
+            return tempObj.ToString();
+        }
+
         public async Task<bool> SaveConfig(EmergencyConfig newConfig)
         {
             var uri = baseRESTUri + "configuracion";
             try
             {
                 var json = JsonConvert.SerializeObject(newConfig);
+                
                 //we need to remove the id field cause it's auto-incremented
-                var tempObj = JObject.Parse(json);
-                tempObj["Id"].Parent.Remove();
-                json = tempObj.ToString();
+                json = RemoveIdFieldFromJson(json);
+
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 HttpResponseMessage response;
                 response = await client.PostAsync(uri, content);
@@ -120,6 +149,31 @@ namespace CareApp.Data
             }
         }
 
+        public async Task<bool> SaveEmergency(Emergencia newEmergency)
+        {
+            var uri = baseRESTUri + "emergencia";
+            try
+            {
+                var json = JsonConvert.SerializeObject(newEmergency);
+
+                //we need to remove the id field cause it's auto-incremented
+                json = RemoveIdFieldFromJson(json);
+
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response;
+                response = await client.PostAsync(uri, content);
+                if (response.IsSuccessStatusCode)
+                    Debug.WriteLine(@"Emergencia saved");
+                else
+                    Debug.WriteLine(response.StatusCode.ToString());
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"				ERROR {0}", ex.Message);
+                return false;
+            }
+        }
 
         //Obtenemos los pacientes de un cuidante
         public async Task<List<Usuario>> GetPatientsFromCarer(string username)
@@ -139,6 +193,16 @@ namespace CareApp.Data
                            where config.Paciente == username
                            select config;
             return new List<EmergencyConfig>(configs);
+        }
+
+        //Obtenemos las emergencias de todos los pacientes de un cuidante
+        public async Task<List<Emergencia>> GetEmergenciesFromCarerPatients(string carer)
+        {
+            var allEmergencies = await GetEmergencies();
+            var emergencies = from emergency in allEmergencies
+                          where emergency.Cuidante == carer
+                          select emergency;
+            return new List<Emergencia>(emergencies);
         }
 
         public async Task<Usuario> Login(string username, string password)

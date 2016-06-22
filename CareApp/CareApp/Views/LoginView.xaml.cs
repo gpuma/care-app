@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 
 namespace CareApp.Views
@@ -13,6 +8,9 @@ namespace CareApp.Views
         public LoginView()
         {
             InitializeComponent();
+            //todo: remove this shit
+            txtUsername.Text = "chio";
+            txtPassword.Text = "chio";
         }
 
         private async void btnLogin_Clicked(object sender, EventArgs e)
@@ -26,9 +24,9 @@ namespace CareApp.Views
 
             //si es cuidante o paciente
             if(user.Tipo)
-                await Navigation.PushAsync(new PatientsView(user));
+                await Navigation.PushAsync(new CarerPatientsView(user));
             else
-                await Navigation.PushAsync(new ConfigsView(user));
+                await Navigation.PushAsync(new PatientView(user));
         }
     }
 }

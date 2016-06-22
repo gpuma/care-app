@@ -4,7 +4,7 @@
 	[Paciente] NVARCHAR(50) NOT NULL, 
 	[Tipo] INT NOT NULL, 
 	[BeaconId1] INT NOT NULL, 
-	[BeaconId2] INT NOT NULL, 
+	[BeaconId2] INT NULL, 
 	[Rango] INT NOT NULL, 
 	[Tiempo] INT NOT NULL, 
 	[Nombre] NVARCHAR(50) NOT NULL, 

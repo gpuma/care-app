@@ -2,19 +2,14 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CareApp.Views.PatientAlertView">
-<ContentPage.Content>
-	  <Grid>
-		  <Grid.RowDefinitions>
-			  <RowDefinition Height="150" />
-			  <RowDefinition Height="*" />
-			  <RowDefinition Height="*" />
-		  </Grid.RowDefinitions>
-		  <Grid.ColumnDefinitions>
-			  <ColumnDefinition Width="*" />
-		  </Grid.ColumnDefinitions>
-		  <Label x:Name="txtAlerta" Grid.Row="0" Grid.Column="0" XAlign="Center" YAlign="Center" FontSize="45" Text="¿ESTÁS BIEN?"/>
-		  <Button x:Name="btnAyuda" Grid.Row="1" Grid.Column="0" Image="ambulance.png" FontSize="40" Text="AYUDA" Clicked="btnAyuda_Clicked"/>
-		  <Button x:Name="btnOk" Grid.Row="2" Grid.Column="0" Image="okay.png" FontSize="40" Text="ESTOY BIEN" Clicked="btnOk_Clicked"/>
-	  </Grid>
+  <ContentPage.Content>
+    <StackLayout>
+      <Label x:Name="txtAlerta" XAlign="Center" YAlign="Center" FontSize="45" Text="¿ESTÁS BIEN?"/>
+      <!--todo: añadir label que informe del progreso-->
+      <Label x:Name="txtMensaje" Text="{Binding MsjTiempo}" XAlign="Center" YAlign="Center" FontSize="25"/>
+      <ProgressBar x:Name="progBar"/>
+      <Button x:Name="btnAyuda" Image="ambulance.png" FontSize="40" Text="AYUDA" Clicked="btnAyuda_Clicked"/>
+      <Button x:Name="btnOk" Image="okay.png" FontSize="40" Text="ESTOY BIEN" Clicked="btnOk_Clicked"/>
+    </StackLayout>
   </ContentPage.Content>
 </ContentPage>

@@ -16,8 +16,11 @@ namespace CareApp.Views
         {
             InitializeComponent();
             User = user;
-            BeaconManager.SetUser(User);
+            BeaconManager.SetRequirements(User, this);
         }
+
+        //todo: URGENTE, check why emergency detection doesnt
+        //work after the first succesful one
 
         protected override void OnAppearing()
         {
@@ -29,6 +32,7 @@ namespace CareApp.Views
         //it will probably stop scanning; do we want that?
         protected override void OnDisappearing()
         {
+            base.OnDisappearing();
             BeaconManager.Stop();
         }
     }

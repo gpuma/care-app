@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Estimotes;
 using System.Diagnostics;
 using CareApp.Models;
+using Xamarin.Forms;
+using System.Threading.Tasks;
 
 namespace CareApp
 {
@@ -18,7 +20,10 @@ namespace CareApp
         static string CROSS = "NO";
         public static bool EnableRanging { get; set; }
 
-        static Usuario user { get; set; }
+        static Usuario User { get; set; }
+        static ContentPage Parent { get; set; }
+
+        //static Data.RESTService rest = new Data.RESTService();
 
         //corre la primera vez q se usa la clase estática
         static BeaconManager()
@@ -29,10 +34,12 @@ namespace CareApp
 
         //debe ser llamado para que funcione
         //recién con esto se puede acceder a las configs
-        public static void SetUser(Usuario usr)
+        //con el "padre" podemos hacer Push de otros formularios
+        public static void SetRequirements(Usuario usr, ContentPage parent)
         {
             EnableRanging = false;
-            user = usr;
+            User = usr;
+            Parent = parent;
             EnableRanging = true;
             //initialize stopwatches for each config
             InitializeTimers();
@@ -42,8 +49,8 @@ namespace CareApp
         {
             //we limit it to the size of our configs
             //might need to change this when we can add or delete configs
-            timers = new Dictionary<int, Stopwatch>(user.Configuraciones.Count);
-            foreach (var econfig in user.Configuraciones)
+            timers = new Dictionary<int, Stopwatch>(User.Configuraciones.Count);
+            foreach (var econfig in User.Configuraciones)
                 timers[econfig.Id] = new Stopwatch();
         }
 
@@ -55,7 +62,7 @@ namespace CareApp
             Tuple<ushort, int> StartBeacon;
             Tuple<ushort, int> EndBeacon;
             //todo: add enabled check (FIRST NEED TO ADD ENABLED FIElD)
-            foreach (var econfig in user.Configuraciones)
+            foreach (var econfig in User.Configuraciones)
             {
                 var currentTimer = timers[econfig.Id];
                 switch ((EmergencyType)econfig.Tipo)
@@ -70,11 +77,15 @@ namespace CareApp
                         currentTimer.Start();
                         if (currentTimer.ElapsedMilliseconds >= econfig.Tiempo)
                         {
+                            //just in case
+                            EnableRanging = false;
+
                             currentTimer.Stop();
                             //mostramos una notificación
                             //todo: originalmente mostrada solo x .1 seg
                             Notifier.Inform(String.Format("detectada proximidad de {0} seg.", currentTimer.ElapsedMilliseconds / 1000.0));
                             currentTimer.Reset();
+                            await Parent.Navigation.PushAsync(new Views.PatientAlertView(User, econfig));
                         }
                         break;
 
@@ -102,6 +113,7 @@ namespace CareApp
                             currentTimer.Stop();
                             Notifier.Inform("CRUCE DETECTADO");
                             CROSS = "NO";
+                            //AlertPatient(econfig);
                         }
                         break;
 
@@ -124,11 +136,20 @@ namespace CareApp
                             currentTimer.Stop();
                             Notifier.Inform(String.Format("CRUCE INCOMPLETO en {0} seg", currentTimer.Elapsed.TotalSeconds));
                             CROSS = "NO";
+                            //AlertPatient(econfig);
                         }
                         break;
                 }
             }
         }
+
+        //primero avisa al usuario para ver si fue un falso positivo
+        //si no es el caso recién se guarda la alarma a la BD
+        //private static async void AlertPatient(EmergencyConfig econfig)
+        //{
+        //    var alertView = new Views.PatientAlertView(User);
+        //    await Parent.Navigation.PushAsync(alertView);
+        //}
 
         //static Tuple<ushort, int> TupleFrom
 

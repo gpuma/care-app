@@ -27,8 +27,8 @@ namespace CareApp.Views
                 await Navigation.PushAsync(new CarerPatientsView(user));
             else
                 //todo: change this back
-                //await Navigation.PushAsync(new PatientView(user));
-                await Navigation.PushAsync(new PatientAlertView(user));
+                await Navigation.PushAsync(new PatientView(user));
+                //await Navigation.PushAsync(new PatientAlertView(user));
         }
     }
 }

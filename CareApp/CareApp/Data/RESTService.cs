@@ -125,6 +125,16 @@ namespace CareApp.Data
             return tempObj.ToString();
         }
 
+        string RemoveTZFromJsonDate(string json)
+        {
+            var tempObj = JObject.Parse(json);
+            var temp = tempObj["Timestamp"].ToString();
+            //19 es el numero de caracteres incluyendo fecha y hora
+            temp = temp.Substring(0, 19);
+            tempObj["Timestamp"] = temp;
+            return tempObj.ToString();
+        }
+
         public async Task<bool> SaveConfig(EmergencyConfig newConfig)
         {
             var uri = baseRESTUri + "configuracion";
@@ -156,10 +166,16 @@ namespace CareApp.Data
             var uri = baseRESTUri + "emergencia";
             try
             {
-                var json = JsonConvert.SerializeObject(newEmergency);
+                
+                //necesario para la conversión de fechas
+                var json = JsonConvert.SerializeObject(newEmergency,
+                    new Newtonsoft.Json.Converters.IsoDateTimeConverter()
+                    { DateTimeFormat= "yyyy-MM-dd'T'HH:mm:ss"  });
 
                 //we need to remove the id field cause it's auto-incremented
                 json = RemoveIdFieldFromJson(json);
+                //no funcionan las fechas iso 8061 con el sandman2 de shit
+                //json = RemoveTZFromJsonDate(json);
 
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 HttpResponseMessage response;

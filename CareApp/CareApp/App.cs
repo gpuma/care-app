@@ -1,5 +1,5 @@
-﻿using Xamarin.Forms;
-using CareApp.Views;
+﻿using CareApp.Views;
+using Xamarin.Forms;
 
 namespace CareApp
 {

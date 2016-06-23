@@ -1,11 +1,11 @@
-﻿using System;
+﻿using CareApp.Models;
+using Estimotes;
+using Plugin.Toasts;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Estimotes;
-using Xamarin.Forms;
-using CareApp.Models;
 using System.Diagnostics;
-using Plugin.Toasts;
+using Xamarin.Forms;
 
 namespace CareApp.Views
 {

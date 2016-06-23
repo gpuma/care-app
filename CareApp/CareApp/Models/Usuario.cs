@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CareApp.Models
 {
-	public class Usuario
+    public class Usuario
 	{
 		//check this shit
 		//public int Id { get; set; }

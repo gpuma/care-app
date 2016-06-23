@@ -1,5 +1,5 @@
-﻿using System;
-using Plugin.Toasts;
+﻿using Plugin.Toasts;
+using System;
 using Xamarin.Forms;
 
 namespace CareApp

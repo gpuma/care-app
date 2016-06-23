@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Xamarin.Forms;
+﻿
 using CareApp.Models;
+using Xamarin.Forms;
 
 namespace CareApp.Views
 {
@@ -19,17 +14,12 @@ namespace CareApp.Views
             BeaconManager.SetRequirements(User, this);
         }
 
-        //todo: URGENTE, check why emergency detection doesnt
-        //work after the first succesful one
-
         protected override void OnAppearing()
         {
             base.OnAppearing();
             BeaconManager.Start();
         }
 
-        //todo: check this shit, if we change to another view
-        //it will probably stop scanning; do we want that?
         protected override void OnDisappearing()
         {
             base.OnDisappearing();

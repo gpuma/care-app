@@ -1,7 +1,7 @@
-﻿using System;
+﻿using CareApp.Models;
+using System;
 using System.ComponentModel;
 using Xamarin.Forms;
-using CareApp.Models;
 
 namespace CareApp.Views
 {
@@ -11,6 +11,7 @@ namespace CareApp.Views
         Usuario user;
         EmergencyConfig econfig;
         public bool ShouldCreateEmergency { get; set; }
+        bool CancelEmergency = false;
         public PatientAlertView(Usuario user, EmergencyConfig econfig)
         {
             InitializeComponent();
@@ -29,6 +30,9 @@ namespace CareApp.Views
             //se activa cada segundo
             Device.StartTimer(TimeSpan.FromSeconds(1), () => {
                 vm.Tiempo -= 1;
+                //el usuario presionó q se encuentra bien
+                if (CancelEmergency)
+                    return false;
                 UpdateMsg();
                 //true -> se sigue repitiendo el vento
                 //false -> se deja de usar
@@ -86,6 +90,7 @@ namespace CareApp.Views
 
         private void btnOk_Clicked(object sender, EventArgs e)
         {
+            CancelEmergency = true;
             Navigation.PopAsync();
         }
     }

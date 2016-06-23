@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using CareApp.Models;
+using System;
 using Xamarin.Forms;
-using CareApp.Models;
 
 namespace CareApp.Views
 {
-	public partial class NewUserView : ContentPage
+    public partial class NewUserView : ContentPage
 	{
 		public NewUserView()
 		{

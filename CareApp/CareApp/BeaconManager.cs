@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CareApp.Models;
 using Estimotes;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using CareApp.Models;
 using Xamarin.Forms;
-using System.Threading.Tasks;
 
 namespace CareApp
 {
@@ -86,6 +85,7 @@ namespace CareApp
                             Notifier.Inform(String.Format("detectada proximidad de {0} seg.", currentTimer.ElapsedMilliseconds / 1000.0));
                             currentTimer.Reset();
                             await Parent.Navigation.PushAsync(new Views.PatientAlertView(User, econfig));
+                            EnableRanging = true;
                         }
                         break;
 
@@ -113,7 +113,8 @@ namespace CareApp
                             currentTimer.Stop();
                             Notifier.Inform("CRUCE DETECTADO");
                             CROSS = "NO";
-                            //AlertPatient(econfig);
+                            await Parent.Navigation.PushAsync(new Views.PatientAlertView(User, econfig));
+                            EnableRanging = true;
                         }
                         break;
 
@@ -136,7 +137,8 @@ namespace CareApp
                             currentTimer.Stop();
                             Notifier.Inform(String.Format("CRUCE INCOMPLETO en {0} seg", currentTimer.Elapsed.TotalSeconds));
                             CROSS = "NO";
-                            //AlertPatient(econfig);
+                            await Parent.Navigation.PushAsync(new Views.PatientAlertView(User, econfig));
+                            EnableRanging = true;
                         }
                         break;
                 }

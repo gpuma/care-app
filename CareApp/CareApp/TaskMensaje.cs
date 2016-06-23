@@ -1,6 +1,6 @@
-﻿using Xamarin.Forms;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace CareApp
 {

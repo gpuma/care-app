@@ -1,7 +1,6 @@
 ﻿using CareApp.Models;
 using System;
 using Xamarin.Forms;
-using FAB.Forms;
 
 namespace CareApp.Views
 {

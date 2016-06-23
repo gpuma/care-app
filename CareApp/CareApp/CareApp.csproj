@@ -50,6 +50,9 @@
       <DependentUpon>BeaconsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Caca.cs" />
+    <Compile Include="Views\CarerAlertView.xaml.cs">
+      <DependentUpon>CarerAlertView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConfigsView.xaml.cs">
       <DependentUpon>ConfigsView.xaml</DependentUpon>
     </Compile>
@@ -191,6 +194,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\PatientView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\CarerAlertView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

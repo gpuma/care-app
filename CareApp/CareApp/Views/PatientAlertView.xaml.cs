@@ -49,7 +49,9 @@ namespace CareApp.Views
                 //0: unread, 1: read
                 Estado = false,
                 Timestamp = DateTime.Now,
-                Tipo = econfig.Tipo
+                Tipo = econfig.Tipo,
+                ConfigId = econfig.Id,
+                Lugar = econfig.Nombre
             };
         }
 

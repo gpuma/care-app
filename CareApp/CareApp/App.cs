@@ -21,8 +21,9 @@ namespace CareApp
             {
                 Setters =
                 {
-                    new Setter { Property = Button.TextColorProperty,  Value = Color.White},
-                    new Setter { Property = Button.FontSizeProperty}
+                    new Setter { Property = Button.TextColorProperty, Value = Color.White},
+                    new Setter { Property = Button.FontSizeProperty},
+                    new Setter { Property = Button.BackgroundColorProperty, Value = Color.Teal}
                 }
             };
 
@@ -42,9 +43,29 @@ namespace CareApp
                 }
             };
 
+            var lblStyle = new Style(typeof(Label))
+            {
+                Setters =
+                {
+                    new Setter { Property = Label.FontSizeProperty, Value = 18 },
+                    new Setter { Property = Label.TextColorProperty, Value = Color.Teal }
+                }
+            };
+
+            var txtStyle = new Style(typeof(Entry))
+            {
+                Setters =
+                {
+                    new Setter { Property = Entry.FontSizeProperty, Value = 18 },
+                    new Setter { Property = Entry.TextColorProperty, Value = Color.Teal }
+                }
+            };
+
             Resources.Add(nameof(btnStyle), btnStyle);
             Resources.Add(nameof(pageStyle), pageStyle);
             Resources.Add(nameof(stackStyle), stackStyle);
+            Resources.Add(nameof(lblStyle), lblStyle);
+            Resources.Add(nameof(txtStyle), txtStyle);
         }
 
         protected override void OnStart()

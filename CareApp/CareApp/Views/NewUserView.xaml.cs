@@ -6,9 +6,11 @@ namespace CareApp.Views
 {
     public partial class NewUserView : ContentPage
 	{
-		public NewUserView()
+        LoginView parent;
+		public NewUserView(LoginView parent)
 		{
 			InitializeComponent();
+            this.parent = parent;
 		}
 
 		async void CrearUsuario(object sender, EventArgs args)
@@ -28,7 +30,14 @@ namespace CareApp.Views
 			var rest = new Data.RESTService();
 			var success = await rest.SaveUser(nuevoUsuario);
             if (success)
+            {
                 Notifier.Inform("Usuario creado correctamente.");
+                //ya que fue creado exitosamente lo pasamos
+                //directamente para que se loguee de frente
+                parent.user = nuevoUsuario;
+                await Navigation.PopAsync();
+                parent.ProceedWithLogin();
+            }
             else
                 Notifier.Inform("No se puedo crear el usuario.");
         }

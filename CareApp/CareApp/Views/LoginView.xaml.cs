@@ -8,9 +8,6 @@ namespace CareApp.Views
         public LoginView()
         {
             InitializeComponent();
-            //todo: remove this shit
-            txtUsername.Text = "chio";
-            txtPassword.Text = "chio";
         }
 
         private async void btnLogin_Clicked(object sender, EventArgs e)

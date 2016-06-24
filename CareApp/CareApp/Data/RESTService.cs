@@ -161,25 +161,32 @@ namespace CareApp.Data
             }
         }
 
-        public async Task<bool> SaveEmergency(Emergencia newEmergency)
+        public async Task<bool> SaveEmergency(Emergencia e, bool update = false)
         {
             var uri = baseRESTUri + "emergencia";
+            //para hacer una operación PUT
+            //la URL debe apuntar al elemento específico q se quiere actualizar
+            if (update)
+                uri += "/" + e.Id;
             try
             {
                 
                 //necesario para la conversión de fechas
-                var json = JsonConvert.SerializeObject(newEmergency,
+                var json = JsonConvert.SerializeObject(e,
                     new Newtonsoft.Json.Converters.IsoDateTimeConverter()
                     { DateTimeFormat= "yyyy-MM-dd'T'HH:mm:ss"  });
 
                 //we need to remove the id field cause it's auto-incremented
-                json = RemoveIdFieldFromJson(json);
-                //no funcionan las fechas iso 8061 con el sandman2 de shit
-                //json = RemoveTZFromJsonDate(json);
+                //only when it's a new record
+                if (!update)
+                    json = RemoveIdFieldFromJson(json);
 
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 HttpResponseMessage response;
-                response = await client.PostAsync(uri, content);
+                if(update)
+                    response = await client.PutAsync(uri, content);
+                else
+                    response = await client.PostAsync(uri, content);
                 if (response.IsSuccessStatusCode)
                     Debug.WriteLine(@"Emergencia saved");
                 else
@@ -213,12 +220,13 @@ namespace CareApp.Data
             return new List<EmergencyConfig>(configs);
         }
 
-        //Obtenemos las emergencias de todos los pacientes de un cuidante
-        public async Task<List<Emergencia>> GetEmergenciesFromCarerPatients(string carer)
+        //Obtenemos las emergencias pendientes de todos los pacientes de un cuidante
+        public async Task<List<Emergencia>> GetPendingEmergenciesFromCarerPatients(string carer)
         {
             var allEmergencies = await GetEmergencies();
             var emergencies = from emergency in allEmergencies
-                          where emergency.Cuidante == carer
+                          where emergency.Cuidante == carer &&
+                                emergency.Estado == false
                           select emergency;
             return new List<Emergencia>(emergencies);
         }

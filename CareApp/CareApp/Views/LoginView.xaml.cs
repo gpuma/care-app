@@ -9,9 +9,6 @@ namespace CareApp.Views
         public LoginView()
         {
             InitializeComponent();
-            //todo: borrar
-            txtUsername.Text = "vash";
-            txtPassword.Text = "vash";
         }
 
         private async void btnLogin_Clicked(object sender, EventArgs e)

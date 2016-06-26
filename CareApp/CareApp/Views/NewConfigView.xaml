@@ -2,11 +2,12 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CareApp.Views.NewConfigView"
-             x:Title="Nueva configuración de emergencia">
+             Title="Nueva configuración"
+             Style="{StaticResource pageStyle}">
   <ContentPage.Content>
-    <StackLayout>
-      <Entry x:Name="txtName" Placeholder="Nombre"/>
-      <Picker x:Name="pckConfigType" SelectedIndexChanged="pckConfigType_SelectedIndexChanged">
+    <StackLayout VerticalOptions="FillAndExpand" Style="{StaticResource stackStyle}">
+      <Entry x:Name="txtName" Placeholder="Nombre" Style="{StaticResource txtStyle}"/>
+      <Picker x:Name="pckConfigType" Title="Tipo de emergencia" SelectedIndexChanged="pckConfigType_SelectedIndexChanged" Style="{StaticResource pckStyle}">
         <Picker.Items>
           <!--Manually change this is if constants are changed-->
           <x:String>Proximidad por periodo</x:String>
@@ -16,9 +17,9 @@
         </Picker.Items>
       </Picker>
       <!--todo: aññdir texto describiendo-->
-      <Button x:Name="btnBeaconId1" Text="{Binding BeaconId1}" Clicked="btnBeaconId1_Clicked"/>
-      <Button x:Name="btnBeaconId2" Text="{Binding BeaconId2}" Clicked="btnBeaconId2_Clicked" IsEnabled="False"/>
-      <Picker x:Name="pckRange">
+      <Button x:Name="btnBeaconId1" Text="{Binding BeaconId1}" Clicked="btnBeaconId1_Clicked" Style="{StaticResource btnStyle}"/>
+      <Button x:Name="btnBeaconId2" Text="{Binding BeaconId2}" Clicked="btnBeaconId2_Clicked" IsEnabled="False" Style="{StaticResource btnStyle}"/>
+      <Picker x:Name="pckRange" Title="Rango" Style="{StaticResource pckStyle}">
         <!--Proximity.Unknown = 0
         Proximity.Immediate = 1
         Proximity.Near = 2
@@ -30,9 +31,9 @@
           <x:String>Lejos</x:String>
         </Picker.Items>
       </Picker>
-      <Entry x:Name="txtTime" Placeholder="Tiempo en seg." Keyboard="Numeric"/>
+      <Entry x:Name="txtTime" Placeholder="Tiempo en seg." Keyboard="Numeric" Style="{StaticResource txtStyle}"/>
       <!--todo: add hour selector for proximity at time-->
-      <Button x:Name="btnAddConfig" Text = "Guardar" Clicked="btnAddConfig_Clicked"/>
+      <Button x:Name="btnAddConfig" Text = "Guardar" Clicked="btnAddConfig_Clicked" Style="{StaticResource btnStyle}"/>
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>

@@ -9,6 +9,9 @@ namespace CareApp.Views
         public LoginView()
         {
             InitializeComponent();
+            //todo: borrar
+            txtUsername.Text = "vash";
+            txtPassword.Text = "vash";
         }
 
         private async void btnLogin_Clicked(object sender, EventArgs e)
@@ -29,7 +32,7 @@ namespace CareApp.Views
             if (user.Tipo)
                 await Navigation.PushAsync(new CarerPatientsView(user));
             else
-                await Navigation.PushAsync(new PatientView(user));
+                await Navigation.PushAsync(new ConfigsView(user));
         }
 
         private async void btnSignup_Clicked(object sender, EventArgs e)

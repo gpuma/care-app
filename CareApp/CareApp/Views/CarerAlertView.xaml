@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CareApp.Views.CarerAlertView">
+             x:Class="CareApp.Views.CarerAlertView"
+             Title="Alerta!"
+             Style="{StaticResource pageStyle}">
   <ContentPage.Content>
-    <StackLayout>
-      <!--<Label x:Name="txtAlerta" XAlign="Center" YAlign="Center" FontSize="45" Text="¿ESTÁS BIEN?"/>-->
-      <Label x:Name="txtMensaje" Text="{Binding Mensaje}" XAlign="Center" YAlign="Center" FontSize="25"/>
-      <Button x:Name="btnLlamar" Image="phone.png" FontSize="40" Text="Llamar a paciente" Clicked="btnLlamar_Clicked"/>
-      <Button x:Name="btnAyuda" Image="ambulance.png" FontSize="40" Text="Llamar ambulancia" Clicked="btnAyuda_Clicked"/>
-      <!--<Button x:Name="btnOk" Image="okay.png" FontSize="40" Text="ESTOY BIEN" Clicked="btnOk_Clicked"/>-->
+    <StackLayout Style="{StaticResource stackStyle}">
+      <Label x:Name="txtMensaje" Text="{Binding Mensaje}" XAlign="Center" TextColor="Red" YAlign="Center" FontSize="25" Style="{StaticResource lblStyle}"/>
+      <Button x:Name="btnLlamar" Image="phone.png" FontSize="28" Text="Llamar a paciente" Clicked="btnLlamar_Clicked" Style="{StaticResource btnStyle}"/>
+      <Button x:Name="btnAyuda" Image="ambulance.png" FontSize="28" Text="Llamar ambulancia" Clicked="btnAyuda_Clicked" Style="{StaticResource btnStyle}"/>
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>

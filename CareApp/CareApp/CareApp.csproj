@@ -49,7 +49,6 @@
     <Compile Include="Views\BeaconsView.xaml.cs">
       <DependentUpon>BeaconsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Caca.cs" />
     <Compile Include="Views\CarerAlertView.xaml.cs">
       <DependentUpon>CarerAlertView.xaml</DependentUpon>
     </Compile>
@@ -58,9 +57,6 @@
     </Compile>
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MainTabbedView.xaml.cs">
-      <DependentUpon>MainTabbedView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\NewConfigView.xaml.cs">
       <DependentUpon>NewConfigView.xaml</DependentUpon>
@@ -74,15 +70,6 @@
     <Compile Include="Views\CarerPatientsView.xaml.cs">
       <DependentUpon>CarerPatientsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PatientView.xaml.cs">
-      <DependentUpon>PatientView.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\MainTabbedView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\BeaconsView.xaml">
@@ -195,12 +182,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\PatientView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\CarerAlertView.xaml">

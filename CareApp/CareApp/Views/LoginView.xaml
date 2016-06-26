@@ -6,8 +6,8 @@
              Title="CareApp">
   <ContentPage.Content>
     <StackLayout Style="{StaticResource stackStyle}">
-      <Entry x:Name="txtUsername" Placeholder="Usuario"/>
-      <Entry x:Name="txtPassword" Placeholder="Contraseña" IsPassword="true"/>
+      <Entry x:Name="txtUsername" Placeholder="Usuario" Style="{StaticResource txtStyle}"/>
+      <Entry x:Name="txtPassword" Placeholder="Contraseña" IsPassword="true" Style="{StaticResource txtStyle}"/>
       <Grid x:Name="grdButtons">
         <Grid.RowDefinitions>
           <RowDefinition Height="Auto"/>

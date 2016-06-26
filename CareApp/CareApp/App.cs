@@ -8,6 +8,10 @@ namespace CareApp
 {
     public class App : Application
     {
+        Color mainColor = Color.Purple;
+        Color otherColor = Color.White;
+        Color thirdColor = Color.Gray;
+        int normalFontSize = 20;
         public App()
         {
             SetStyle();
@@ -21,9 +25,9 @@ namespace CareApp
             {
                 Setters =
                 {
-                    new Setter { Property = Button.TextColorProperty, Value = Color.White},
-                    new Setter { Property = Button.FontSizeProperty},
-                    new Setter { Property = Button.BackgroundColorProperty, Value = Color.Teal}
+                    new Setter { Property = Button.TextColorProperty, Value = otherColor},
+                    new Setter { Property = Button.FontSizeProperty, Value = normalFontSize},
+                    new Setter { Property = Button.BackgroundColorProperty, Value = mainColor}
                 }
             };
 
@@ -31,7 +35,7 @@ namespace CareApp
             {
                 Setters =
                 {
-                    new Setter { Property = ContentPage.BackgroundColorProperty, Value = Color.White }
+                    new Setter { Property = ContentPage.BackgroundColorProperty, Value = otherColor }
                 }
             };
 
@@ -39,7 +43,8 @@ namespace CareApp
             {
                 Setters =
                 {
-                    new Setter { Property = StackLayout.VerticalOptionsProperty, Value = LayoutOptions.CenterAndExpand }
+                    new Setter { Property = StackLayout.VerticalOptionsProperty, Value = LayoutOptions.CenterAndExpand },
+                    new Setter { Property = StackLayout.MarginProperty, Value = new Thickness(10) }
                 }
             };
 
@@ -47,8 +52,16 @@ namespace CareApp
             {
                 Setters =
                 {
-                    new Setter { Property = Label.FontSizeProperty, Value = 18 },
-                    new Setter { Property = Label.TextColorProperty, Value = Color.Teal }
+                    new Setter { Property = Label.FontSizeProperty, Value = normalFontSize },
+                    new Setter { Property = Label.TextColorProperty, Value = mainColor }
+                }
+            };
+
+            var bitStyle = new Style(typeof(Switch))
+            {
+                Setters =
+                {
+                    new Setter { Property = Switch.BackgroundColorProperty, Value = mainColor }
                 }
             };
 
@@ -56,8 +69,27 @@ namespace CareApp
             {
                 Setters =
                 {
-                    new Setter { Property = Entry.FontSizeProperty, Value = 18 },
-                    new Setter { Property = Entry.TextColorProperty, Value = Color.Teal }
+                    new Setter { Property = Entry.FontSizeProperty, Value = normalFontSize },
+                    new Setter { Property = Entry.PlaceholderColorProperty, Value = mainColor },
+                    new Setter { Property = Entry.TextColorProperty, Value = mainColor },
+                    new Setter { Property = Entry.BackgroundColorProperty, Value = otherColor }
+                }
+            };
+
+            var lstStyle = new Style(typeof(ListView))
+            {
+                Setters =
+                {
+                    new Setter { Property = ListView.BackgroundColorProperty, Value = otherColor },
+                    new Setter { Property = ListView.SeparatorColorProperty, Value = mainColor }
+                }
+            };
+            var pckStyle = new Style(typeof(Picker))
+            {
+                Setters =
+                {
+                    new Setter { Property = Picker.BackgroundColorProperty, Value = otherColor },
+                    new Setter { Property = Picker.TextColorProperty, Value = mainColor }
                 }
             };
 
@@ -66,6 +98,9 @@ namespace CareApp
             Resources.Add(nameof(stackStyle), stackStyle);
             Resources.Add(nameof(lblStyle), lblStyle);
             Resources.Add(nameof(txtStyle), txtStyle);
+            Resources.Add(nameof(bitStyle), bitStyle);
+            Resources.Add(nameof(lstStyle), lstStyle);
+            Resources.Add(nameof(pckStyle), pckStyle);
         }
 
         protected override void OnStart()

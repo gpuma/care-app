@@ -6,7 +6,6 @@ namespace CareApp.Views
 {
     public partial class CarerPatientsView : ContentPage
     {
-        //public List<Usuario> Pacientes { get; set; }
         public Usuario Cuidante { get; set; }
         public bool ShouldCheckForEmergencies { get; set; }
         //en segundos
@@ -17,6 +16,7 @@ namespace CareApp.Views
         {
             InitializeComponent();
             Cuidante = cuidante;
+            Title = "Pacientes de " + Cuidante.Nombre;
             BindingContext = Cuidante;
             ShouldCheckForEmergencies = true;
 

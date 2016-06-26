@@ -7,11 +7,11 @@
 		<StackLayout Style="{StaticResource stackStyle}">
 			<!--TODO: add combo with carers fetched, it should be hidden
 			//unless Patient option is selected-->
-			<Entry x:Name="txtUsername" Placeholder="Nombre de usuario"/>
-			<Entry x:Name="txtPassword" Placeholder="Contraseña" IsPassword="true"/>
-			<Entry x:Name="txtNombre" Placeholder="Nombre"/>
-			<Entry x:Name="txtApellido" Placeholder="Apellido"/>
-			<Entry x:Name="txtTelefono" Placeholder="Teléfono" Keyboard="Telephone" />
+			<Entry x:Name="txtUsername" Placeholder="Nombre de usuario" Style="{StaticResource txtStyle}"/>
+			<Entry x:Name="txtPassword" Placeholder="Contraseña" IsPassword="true" Style="{StaticResource txtStyle}"/>
+			<Entry x:Name="txtNombre" Placeholder="Nombre" Style="{StaticResource txtStyle}"/>
+			<Entry x:Name="txtApellido" Placeholder="Apellido" Style="{StaticResource txtStyle}"/>
+			<Entry x:Name="txtTelefono" Placeholder="Teléfono" Keyboard="Telephone" Style="{StaticResource txtStyle}"/>
       <Grid>
         <Grid.RowDefinitions>
           <RowDefinition Height="Auto"/>
@@ -22,12 +22,12 @@
         </Grid.ColumnDefinitions>
         <!--todo: add this padding in a style-->
         <ContentView Padding="12,0,0,0">
-          <Label Text="Paciente?" Grid.Row="0" Grid.Column="0"  Style="{StaticResource lblStyle}"/>
+          <Label Text="Paciente?" Grid.Row="0" Grid.Column="0" Style="{StaticResource lblStyle}"/>
         </ContentView>
         <Switch x:Name="bitPaciente" Toggled="bitPaciente_Toggled" Grid.Row="0" Grid.Column="1"/>
       </Grid>
       <!--invisible hasta que se haga toggle-->
-      <Entry x:Name="txtCuidante" Placeholder="Nombre cuidante" IsVisible="false"/>
+      <Entry x:Name="txtCuidante" Placeholder="Nombre cuidante" IsVisible="false" Style="{StaticResource txtStyle}"/>
 			<Button x:Name="btnNuevoUsuario" Text = "Crear usuario" Clicked="CrearUsuario" Style="{StaticResource btnStyle}"/>
 			<!--<ActivityIndicator x:Name="actLoading" IsVisible="false" IsRunning="false" />-->
 		</StackLayout>

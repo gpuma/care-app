@@ -1,27 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CareApp.Views.CarerPatientsView"
-             Title="{Binding Nombre}">
+             x:Class="CareApp.Views.CarerPatientsView">
   <ContentPage.Content>
     <StackLayout>
-      <!--<Button x:Name="btnLogOut" Text="Log out" Clicked="OnLogOut_Clicked" BackgroundColor="#60E2C0"
-			TextColor="White" FontSize="20"/>
-      <Label x:Name="lblPaused" XAlign="Center" YAlign="Center" FontSize="30"
-			Text="Alert monitoring is paused." TextColor="Black" IsVisible="false"></Label>
-      <Button x:Name="btnResume" Text="Resume" Clicked="OnResume_Clicked" BackgroundColor="#60E2C0"
-			TextColor="White" FontSize="20" IsVisible="false"/>-->
-
       <ScrollView Orientation="Vertical" VerticalOptions="FillAndExpand">
         <ListView x:Name="lstPatients" ItemsSource="{Binding Pacientes}" VerticalOptions="FillAndExpand"
-				HasUnevenRows="true">
+				HasUnevenRows="true" Style="{StaticResource lstStyle}">
           <ListView.ItemTemplate>
             <DataTemplate>
               <ViewCell>
                 <ViewCell.View>
-                  <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand">
-                    <Label Text="{Binding Nombre}"/>
-                    <Label Text="{Binding Apellido}"/>
+                  <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand" Style="{StaticResource stackStyle}">
+                    <Label Text="{Binding Nombre}" Style="{StaticResource lblStyle}" FontSize="32"/>
+                    <Label Text="{Binding Apellido}" Style="{StaticResource lblStyle}" FontSize="32"/>
                   </StackLayout>
                 </ViewCell.View>
               </ViewCell>
@@ -29,8 +21,6 @@
           </ListView.ItemTemplate>
         </ListView>
       </ScrollView>
-      <!--<Button x:Name="btnAddPatient" Text="Add patient" Clicked="OnAddPatient_Clicked" BackgroundColor="#60E2C0"
-			TextColor="White" FontSize="20"/>-->
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>

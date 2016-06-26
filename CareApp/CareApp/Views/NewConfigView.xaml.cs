@@ -17,13 +17,20 @@ namespace CareApp.Views
         {
             InitializeComponent();
             this.paciente = paciente;
+            UpdateBeaconDisplay();
         }
 
         //todo: la solución más chancha que existe
-        public void RefreshBindingContext()
+        public void UpdateBeaconDisplay()
         {
-            BindingContext = null;
-            BindingContext = this;
+            if (BeaconId1 == 0)
+                btnBeaconId1.Text = "Seleccionar beacon 1...";
+            else
+                btnBeaconId1.Text = String.Format("Beacon 1 ID: {0}", BeaconId1);
+            if (BeaconId2 == 0)
+                btnBeaconId2.Text = "Seleccionar beacon 2...";
+            else
+                btnBeaconId2.Text = String.Format("Beacon 2 ID: {0}", BeaconId2);
         }
 
         private void pckConfigType_SelectedIndexChanged(object sender, EventArgs e)
@@ -37,8 +44,8 @@ namespace CareApp.Views
             {
                 Paciente = paciente.Username,
                 Tipo = pckConfigType.SelectedIndex,
-                BeaconId1 = ushort.Parse(btnBeaconId1.Text),
-                BeaconId2 = ushort.Parse(btnBeaconId2.Text),
+                BeaconId1 = BeaconId1,
+                BeaconId2 = BeaconId2,
                 Rango = pckRange.SelectedIndex + 1,
                 //la bd está en miliseg.
                 Tiempo = Int32.Parse(txtTime.Text) * 1000,
@@ -47,7 +54,12 @@ namespace CareApp.Views
             var rest = new Data.RESTService();
             var success = await rest.SaveConfig(newConfig);
             if (success)
+            {
                 Notifier.Inform("Configuración creada correctamente.");
+                //todo: quizás esto falle cuando se haga un upsert
+                paciente.Configuraciones.Add(newConfig);
+                await Navigation.PopAsync();
+            }
             else
                 Notifier.Inform("No se puedo crear la configuración.");
         }

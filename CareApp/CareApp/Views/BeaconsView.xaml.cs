@@ -58,7 +58,7 @@ namespace CareApp.Views
                 this.parent.BeaconId2 = beacon.Major;
 
             //jajajajajajajajaja
-            this.parent.RefreshBindingContext();
+            this.parent.UpdateBeaconDisplay();
             await Navigation.PopAsync();
         }
 
@@ -74,10 +74,26 @@ namespace CareApp.Views
                     Uuid = b.Uuid,
                     Major = b.Major,
                     Minor = b.Minor,
-                    RelativeDistance = b.Proximity.ToString()
+                    RelativeDistance = Traducir(b.Proximity)
                 });
-            }
+            }        
             Debug.WriteLine(String.Format("found {0}", Beacons.Count));
+        }
+
+        private string Traducir(Proximity distancia)
+        {
+            switch (distancia)
+            {
+                case Proximity.Far:
+                    return "Lejos";
+                case Proximity.Near:
+                    return "Cerca";
+                case Proximity.Immediate:
+                    return "Inmediata";
+                case Proximity.Unknown:
+                default:
+                    return "Desconocida";
+            }
         }
 
         protected override void OnAppearing()

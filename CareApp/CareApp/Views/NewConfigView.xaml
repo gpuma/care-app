@@ -7,7 +7,7 @@
   <ContentPage.Content>
     <StackLayout VerticalOptions="FillAndExpand" Style="{StaticResource stackStyle}">
       <Entry x:Name="txtName" Placeholder="Nombre" Style="{StaticResource txtStyle}"/>
-      <Picker x:Name="pckConfigType" Title="Tipo de emergencia" SelectedIndexChanged="pckConfigType_SelectedIndexChanged" Style="{StaticResource pckStyle}">
+      <Picker x:Name="pckConfigType" TextColor="Black" Title="Tipo de emergencia" SelectedIndexChanged="pckConfigType_SelectedIndexChanged" Style="{StaticResource pckStyle}">
         <Picker.Items>
           <!--Manually change this is if constants are changed-->
           <x:String>Proximidad por periodo</x:String>

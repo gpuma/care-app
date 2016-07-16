@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using Xamarin.Forms;
+using Plugin.Vibrate;
 
 namespace CareApp.Views
 {
@@ -15,6 +16,8 @@ namespace CareApp.Views
         public PatientAlertView(Usuario user, EmergencyConfig econfig)
         {
             InitializeComponent();
+            //vibramos el dispositivo xq se dio una emergencia
+            CrossVibrate.Current.Vibration(1000);
             this.user = user;
             //la necesitamos para saber q tipo de emergencia ocurrió
             this.econfig = econfig;

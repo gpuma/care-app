@@ -1841,6 +1841,8 @@ namespace CareApp.Droid
 			global::FAB.Droid.Resource.Styleable.ViewStubCompat_android_id = global::CareApp.Droid.Resource.Styleable.ViewStubCompat_android_id;
 			global::FAB.Droid.Resource.Styleable.ViewStubCompat_android_inflatedId = global::CareApp.Droid.Resource.Styleable.ViewStubCompat_android_inflatedId;
 			global::FAB.Droid.Resource.Styleable.ViewStubCompat_android_layout = global::CareApp.Droid.Resource.Styleable.ViewStubCompat_android_layout;
+			global::Plugin.Vibrate.Resource.String.ApplicationName = global::CareApp.Droid.Resource.String.ApplicationName;
+			global::Plugin.Vibrate.Resource.String.Hello = global::CareApp.Droid.Resource.String.Hello;
 			global::Plugin.Toasts.Resource.Drawable.error = global::CareApp.Droid.Resource.Drawable.error;
 			global::Plugin.Toasts.Resource.Drawable.info = global::CareApp.Droid.Resource.Drawable.info;
 			global::Plugin.Toasts.Resource.Drawable.success = global::CareApp.Droid.Resource.Drawable.success;

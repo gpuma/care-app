@@ -20,23 +20,6 @@ namespace CareApp.Droid
             Xamarin.Forms.DependencyService.Register<ToastNotificatorImplementation>();
             ToastNotificatorImplementation.Init(this);
 
-            //para nuestro mensaje background
-            MessagingCenter.Subscribe<StartRunningTaskMessage>(this,
-                "StartRunningTaskMessage", message =>
-                {
-                    var intent = new Intent(this, typeof(RunningTaskService));
-                    StartService(intent);
-                }
-            );
-
-            MessagingCenter.Subscribe<StopRunningTaskMessage>(this,
-               "StopRunningTaskMessage", message =>
-               {
-                   var intent = new Intent(this, typeof(RunningTaskService));
-                   StopService(intent);
-               }
-            );
-
             LoadApplication(new App());
         }
     }

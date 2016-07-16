@@ -4,7 +4,6 @@
              x:Class="CareApp.Views.CarerPatientsView">
   <ContentPage.Content>
     <StackLayout>
-      <ScrollView Orientation="Vertical" VerticalOptions="FillAndExpand">
         <ListView x:Name="lstPatients" ItemsSource="{Binding Pacientes}" VerticalOptions="FillAndExpand"
 				HasUnevenRows="true" Style="{StaticResource lstStyle}">
           <ListView.ItemTemplate>
@@ -20,7 +19,8 @@
             </DataTemplate>
           </ListView.ItemTemplate>
         </ListView>
-      </ScrollView>
+      <!--todo: implement this shit-->
+      <Button x:Name="btnNewPatient" Text = "Nuevo paciente..." Style="{StaticResource btnStyle}"/>
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>

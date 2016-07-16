@@ -19,7 +19,7 @@
             </DataTemplate>
           </ListView.ItemTemplate>
         </ListView>
-        <Button x:Name="btnNewConfig" Text = "Nueva configuración" Clicked="btnNewConfig_Clicked" Style="{StaticResource btnStyle}"/>
+        <Button x:Name="btnNewConfig" Text = "Nueva configuración..." Clicked="btnNewConfig_Clicked" Style="{StaticResource btnStyle}"/>
       </StackLayout>
   </ContentPage.Content>
 </ContentPage>

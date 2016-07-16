@@ -60,6 +60,7 @@ namespace CareApp
             //temporales
             Tuple<ushort, int> StartBeacon;
             Tuple<ushort, int> EndBeacon;
+            Tuple<ushort, int> TargetBeacon;
             //todo: add enabled check (FIRST NEED TO ADD ENABLED FIElD)
             foreach (var econfig in User.Configuraciones)
             {
@@ -67,8 +68,8 @@ namespace CareApp
                 switch ((EmergencyType)econfig.Tipo)
                 {
                     case EmergencyType.ProximityForPeriod:
-                        var targetBeacon = new Tuple<ushort, int>(econfig.BeaconId1, econfig.Rango);
-                        if (!beacons.Contain(targetBeacon))
+                        TargetBeacon = new Tuple<ushort, int>(econfig.BeaconId1, econfig.Rango);
+                        if (!beacons.Contain(TargetBeacon))
                         {
                             currentTimer.Reset();
                             continue;
@@ -88,7 +89,29 @@ namespace CareApp
                             EnableRanging = true;
                         }
                         break;
+                    case EmergencyType.ProximityForPeriodAtTime:
+                        TargetBeacon = new Tuple<ushort, int>(econfig.BeaconId1, econfig.Rango);
+                        if (!beacons.Contain(TargetBeacon))
+                        {
+                            currentTimer.Reset();
+                            continue;
+                        }
+                        currentTimer.Start();
+                        if (currentTimer.ElapsedMilliseconds >= econfig.Tiempo &&
+                             DateTime.Now.Hour >= econfig.Hora.Hour)
+                        {
+                            //just in case
+                            EnableRanging = false;
 
+                            currentTimer.Stop();
+                            //mostramos una notificación
+                            //todo: originalmente mostrada solo x .1 seg
+                            Notifier.Inform(String.Format("detectada proximidad de {0} seg.", currentTimer.ElapsedMilliseconds / 1000.0));
+                            currentTimer.Reset();
+                            await Parent.Navigation.PushAsync(new Views.PatientAlertView(User, econfig));
+                            EnableRanging = true;
+                        }
+                        break;
                     case EmergencyType.FastCross:
                         StartBeacon = new Tuple<ushort, int>(econfig.BeaconId1, econfig.Rango);
                         EndBeacon = new Tuple<ushort, int>(econfig.BeaconId2, econfig.Rango);
@@ -158,7 +181,8 @@ namespace CareApp
         //comparamos el beacon con nuestra tupla q representa a un beacon
         static bool IsEqual(this IBeacon b, Tuple<ushort,int> bt)
         {
-            return (b.Major == bt.Item1 && (int)b.Proximity == bt.Item2);
+            //<= xq si queremos que detecta cerca, también incluye inmediato
+            return (b.Major == bt.Item1 && (int)b.Proximity <= bt.Item2);
         }
 
         //para ver si la lista de beacons contiene a la tupla q representa a nuestro beacon

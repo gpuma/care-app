@@ -8,6 +8,7 @@
 	[Rango] INT NOT NULL, 
 	[Tiempo] INT NOT NULL, 
 	[Nombre] NVARCHAR(50) NOT NULL, 
-	CONSTRAINT [FK_Configuracion_Usuario_Paciente] FOREIGN KEY ([Paciente]) REFERENCES [Usuario]([Username]), 
+	[Hora] DATETIME NULL, 
+    CONSTRAINT [FK_Configuracion_Usuario_Paciente] FOREIGN KEY ([Paciente]) REFERENCES [Usuario]([Username]), 
 	CONSTRAINT [FK_Configuracion_TipoEmergencia_Tipo] FOREIGN KEY ([Tipo]) REFERENCES [TipoEmergencia]([Id])
 )

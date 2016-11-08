@@ -244,3 +244,6 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 *.refactorlog
+
+# win10 db shit
+*.jfm

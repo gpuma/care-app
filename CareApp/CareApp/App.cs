@@ -11,7 +11,7 @@ namespace CareApp
         Color mainColor = Color.Purple;
         Color otherColor = Color.White;
         Color thirdColor = Color.Gray;
-        int normalFontSize = 20;
+        int normalFontSize = 16;
         public App()
         {
             SetStyle();

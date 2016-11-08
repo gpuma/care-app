@@ -20,7 +20,8 @@
           </ListView.ItemTemplate>
         </ListView>
       <!--todo: implement this shit-->
-      <Button x:Name="btnNewPatient" Text = "Nuevo paciente..." Style="{StaticResource btnStyle}"/>
+      <Button x:Name="btnNewPatient" Text = "Nuevo paciente..." Style="{StaticResource btnStyle}"
+              Clicked="btnNewPatient_Clicked"/>
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>

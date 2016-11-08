@@ -6,15 +6,36 @@ namespace CareApp.Views
 {
     public partial class NewUserView : ContentPage
 	{
-        LoginView parent;
-		public NewUserView(LoginView parent)
+        ContentPage parent;
+        //si es verdadero el formulario fue llamado desde LoginView
+        //si es falso fue llamado desde CarerPatientsView
+        bool isLogin;
+		public NewUserView(ContentPage parent, bool isLogin = true)
 		{
 			InitializeComponent();
             this.parent = parent;
+            this.isLogin = isLogin;
+
+            //cuando fue llamado desde CarerPatientsView le asignamos
+            //de frente el Paciente al usuario actual, ya que se supone
+            //que es él mismo el que lo creo
+            if (!isLogin)
+            {
+                this.bitPaciente.IsEnabled = false;
+                this.bitPaciente.IsToggled = true;
+                //lo oculta completamente
+                //this.txtCuidante.readon = false;
+                this.txtCuidante.Text = ((CarerPatientsView)parent).Cuidante.Username;
+            }
 		}
 
-		async void CrearUsuario(object sender, EventArgs args)
-		{
+        void btnNuevoUsuario_Clicked(object sender, EventArgs args)
+        {
+            CrearUsuario();
+        }
+
+        async void CrearUsuario()
+        {
             //todo: añadir check y feedback de inserción
             var nuevoUsuario = new Usuario
             {
@@ -26,17 +47,25 @@ namespace CareApp.Views
                 Tipo = !bitPaciente.IsToggled,
                 Telefono = txtTelefono.Text,
                 Cuidante = txtCuidante.Text
-			};
-			var rest = new Data.RESTService();
-			var success = await rest.SaveUser(nuevoUsuario);
+            };
+            var rest = new Data.RESTService();
+            var success = await rest.SaveUser(nuevoUsuario);
             if (success)
             {
                 Notifier.Inform("Usuario creado correctamente.");
-                //ya que fue creado exitosamente lo pasamos
-                //directamente para que se loguee de frente
-                parent.user = nuevoUsuario;
-                await Navigation.PopAsync();
-                parent.ProceedWithLogin();
+                if (isLogin)
+                {
+                    //ya que fue creado exitosamente lo pasamos
+                    //directamente para que se loguee de frente
+                    ((LoginView)parent).user = nuevoUsuario;
+                    await Navigation.PopAsync();
+                    ((LoginView)parent).ProceedWithLogin();
+                }
+                else
+                {
+                    ((CarerPatientsView)parent).RefrescarPacientes();
+                    await Navigation.PopAsync();
+                }
             }
             else
                 Notifier.Inform("No se puedo crear el usuario.");

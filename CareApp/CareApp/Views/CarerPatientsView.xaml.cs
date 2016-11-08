@@ -39,5 +39,18 @@ namespace CareApp.Views
             var e = emergencies[0];
             await Navigation.PushAsync(new CarerAlertView(this, Cuidante, e));
         }
+
+        async void btnNewPatient_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new NewUserView(this, false));
+        }
+
+        //usado cuando crea un paciente desde su interfaz
+        public async void RefrescarPacientes()
+        {
+            Cuidante = await rest.Login(Cuidante.Username, Cuidante.Password);
+            BindingContext = null;
+            BindingContext = Cuidante;
+        }
     }
 }

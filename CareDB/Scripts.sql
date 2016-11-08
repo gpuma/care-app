@@ -15,10 +15,12 @@ GO
 INSERT [dbo].[Usuario] ([Nombre], [Apellido], [Username], [Password], [Tipo], [Cuidante], [Telefono]) VALUES (N'Gustavo', N'Puma', N'vash', N'vash', 1, NULL, N'+51921302769')
 GO
 
-insert into TipoEmergencia values('ProximidadPorPeriodo','Emergencia por proximidad')
-insert into TipoEmergencia values('ProximidadPorPeriodoAHora','Emergencia por proximidad a hora')
-insert into TipoEmergencia values('CruceRapido','Emergencia por cruce rápido')
-insert into TipoEmergencia values('CruceIncompleto','Emergencia por cruce incompleto')
+select * from TipoEmergencia
+
+insert into TipoEmergencia values(1,'ProximidadPorPeriodo','Emergencia por proximidad')
+insert into TipoEmergencia values(2,'ProximidadPorPeriodoAHora','Emergencia por proximidad a hora')
+insert into TipoEmergencia values(3,'CruceRapido','Emergencia por cruce rápido')
+insert into TipoEmergencia values(4,'CruceIncompleto','Emergencia por cruce incompleto')
 
 insert into Usuario values ('Gustavo','Puma','vash','vash',1,'vash','+51921302769')
 insert into Usuario values ('Elvis','Puma','elvis','elvis',0,'vash','+51054470160')
@@ -26,7 +28,7 @@ insert into Usuario values ('Rocío','Puma','chio','chio',0,'vash','+51054470160
 insert into Usuario values ('Hernán','Puma','hernan','hernan',0,'vash','+51054470160')
 insert into Usuario values ('Silvia','Tejada','silvia','silvia',0,'vash','+51958554460')
 
-select * from Usuario
+select * from Configuracion
 
-insert into Configuracion values ('chio',0,28927,null,1,2000,'baño')
-insert into Configuracion values ('chio',2,40796,53847,1,10000,'escaleras')
+insert into Configuracion values (1,'chio',0,28927,null,1,2000,'baño')
+insert into Configuracion values (2,'chio',2,40796,53847,1,10000,'escaleras')

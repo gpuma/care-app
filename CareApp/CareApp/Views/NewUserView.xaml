@@ -28,7 +28,7 @@
       </Grid>
       <!--invisible hasta que se haga toggle-->
       <Entry x:Name="txtCuidante" Placeholder="Nombre cuidante" IsVisible="false" Style="{StaticResource txtStyle}"/>
-			<Button x:Name="btnNuevoUsuario" Text = "Crear usuario" Clicked="CrearUsuario" Style="{StaticResource btnStyle}"/>
+			<Button x:Name="btnNuevoUsuario" Text = "Crear usuario" Clicked="btnNuevoUsuario_Clicked" Style="{StaticResource btnStyle}"/>
 			<!--<ActivityIndicator x:Name="actLoading" IsVisible="false" IsRunning="false" />-->
 		</StackLayout>
 	</ContentPage.Content>

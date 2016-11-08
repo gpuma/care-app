@@ -16,8 +16,8 @@
           <ColumnDefinition Width="*"/>
           <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="btnLogin" Grid.Row="0" Grid.Column="0" Text = "Iniciar sesión" Clicked="btnLogin_Clicked" Style="{StaticResource btnStyle}"/>
-        <Button x:Name="btnSignup" Grid.Row="0" Grid.Column="1" Text = "Registrarse" Clicked="btnSignup_Clicked" Style="{StaticResource btnStyle}"/>
+        <Button x:Name="btnLogin" Grid.Row="0" Grid.Column="0" Text = "Log in" Clicked="btnLogin_Clicked" Style="{StaticResource btnStyle}"/>
+        <Button x:Name="btnSignup" Grid.Row="0" Grid.Column="1" Text = "Nuevo..." Clicked="btnSignup_Clicked" Style="{StaticResource btnStyle}"/>
       </Grid>
       <!--todo: usar esta huevada-->
       <ActivityIndicator x:Name="actLoading" IsVisible="false" IsRunning="false" />

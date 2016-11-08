@@ -1,5 +1,6 @@
 ﻿using System;
 using Xamarin.Forms;
+using Acr.UserDialogs;
 
 namespace CareApp.Views
 {
@@ -13,8 +14,14 @@ namespace CareApp.Views
 
         private async void btnLogin_Clicked(object sender, EventArgs e)
         {
-            var rest = new Data.RESTService();
-            user = await rest.Login(txtUsername.Text, txtPassword.Text);
+            //para mostrar el circulito de progreso
+            var progConfig = new ProgressDialogConfig { Title = "Iniciando sesión...", AutoShow = true };
+            using (var progDialog = UserDialogs.Instance.Progress(progConfig))
+            {
+                var rest = new Data.RESTService();
+                user = await rest.Login(txtUsername.Text, txtPassword.Text);
+            }
+
             if (user == null)
                 Notifier.Inform("error logueandose");
             else

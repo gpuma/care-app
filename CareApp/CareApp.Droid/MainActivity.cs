@@ -4,6 +4,7 @@ using Android.Content.PM;
 using Android.OS;
 using Plugin.Toasts;
 using Xamarin.Forms;
+using Acr.UserDialogs;
 
 namespace CareApp.Droid
 {
@@ -19,7 +20,7 @@ namespace CareApp.Droid
             //registramos la implementación Android de nuestro Toast plugin
             Xamarin.Forms.DependencyService.Register<ToastNotificatorImplementation>();
             ToastNotificatorImplementation.Init(this);
-
+            UserDialogs.Init(this);
             LoadApplication(new App());
         }
     }

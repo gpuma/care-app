@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CareApp.Views.LoginView"
              Style="{StaticResource pageStyle}"
-             Title="CareApp">
+             Title="CareApp"
+             BackgroundImage="trees.png">
   <ContentPage.Content>
     <StackLayout Style="{StaticResource stackStyle}">
       <Entry x:Name="txtUsername" Placeholder="Usuario" Style="{StaticResource txtStyle}"/>
@@ -19,8 +20,7 @@
         <Button x:Name="btnLogin" Grid.Row="0" Grid.Column="0" Text = "Log in" Clicked="btnLogin_Clicked" Style="{StaticResource btnStyle}"/>
         <Button x:Name="btnSignup" Grid.Row="0" Grid.Column="1" Text = "Nuevo..." Clicked="btnSignup_Clicked" Style="{StaticResource btnStyle}"/>
       </Grid>
-      <!--todo: usar esta huevada-->
-      <ActivityIndicator x:Name="actLoading" IsVisible="false" IsRunning="false" />
+      <Label x:Name="lblBienvenida" BackgroundColor="White" Text="Bienvenido a CareApp" XAlign="Center" FontSize="25" Style="{StaticResource lblStyle}"/>
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>

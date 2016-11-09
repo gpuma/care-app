@@ -4160,8 +4160,8 @@ namespace CareApp.Droid
 			// aapt resource value: 0x7f0200a7
 			public const int mr_ic_play_light = 2130837671;
 			
-			// aapt resource value: 0x7f0200b0
-			public const int notification_template_icon_bg = 2130837680;
+			// aapt resource value: 0x7f0200b1
+			public const int notification_template_icon_bg = 2130837681;
 			
 			// aapt resource value: 0x7f0200a8
 			public const int okay = 2130837672;
@@ -4185,7 +4185,10 @@ namespace CareApp.Droid
 			public const int success = 2130837678;
 			
 			// aapt resource value: 0x7f0200af
-			public const int warning = 2130837679;
+			public const int trees = 2130837679;
+			
+			// aapt resource value: 0x7f0200b0
+			public const int warning = 2130837680;
 			
 			static Drawable()
 			{

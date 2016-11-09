@@ -1,6 +1,7 @@
 ﻿using CareApp.Models;
 using System;
 using Xamarin.Forms;
+using Acr.UserDialogs;
 
 namespace CareApp.Views
 {
@@ -11,7 +12,34 @@ namespace CareApp.Views
         {
             InitializeComponent();
             Paciente = paciente;
-            //LoadValues();
+        }
+
+        //al darle clic a una configuración se le presenta al usuario la opción de borrarla
+        async void lstConfigs_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            var deseaEliminar = await DisplayAlert("Confirmación", "¿Desea eliminar esta configuración?", "Sí", "No");
+
+            if (!deseaEliminar)
+                return;
+
+            var configSeleccionada = (EmergencyConfig)lstConfigs.SelectedItem;
+            bool success = false;
+            var progConfig = new  ProgressDialogConfig { Title = "Iniciando sesión...", AutoShow = true };
+            using (var progDialog = UserDialogs.Instance.Progress(progConfig))
+            {
+                var rest = new Data.RESTService();
+                success = await rest.DeleteConfig(configSeleccionada.Id);
+            }
+            if (success)
+            {
+                Notifier.Inform("Configuración borrada exitosamente.");
+                Paciente.Configuraciones.Remove(configSeleccionada);
+                LoadValues();
+            }
+            else
+            {
+                Notifier.Inform("No se pudo borrar la configuración.");
+            }
         }
 
         public void LoadValues()

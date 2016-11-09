@@ -164,6 +164,26 @@ namespace CareApp.Data
             }
         }
 
+        public async Task<bool> DeleteConfig(int configId)
+        {
+            var uri = baseRESTUri + "configuracion/" + configId;
+            try
+            {
+                HttpResponseMessage response;
+                response = await client.DeleteAsync(uri);
+                if (response.IsSuccessStatusCode)
+                    Debug.WriteLine(@"CONFIGURACIÓN deleted");
+                else
+                    Debug.WriteLine(response.StatusCode.ToString());
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"				ERROR {0}", ex.Message);
+                return false;
+            }
+        }
+
         public async Task<bool> SaveEmergency(Emergencia e, bool update = false)
         {
             var uri = baseRESTUri + "emergencia";

@@ -6,7 +6,7 @@
   <ContentPage.Content>
       <StackLayout VerticalOptions="FillAndExpand" Style="{StaticResource stackStyle}">
         <ListView x:Name="lstConfigs" ItemsSource="{Binding Configuraciones}" VerticalOptions="FillAndExpand"
-			  HasUnevenRows="true" Style="{StaticResource lstStyle}">
+			  HasUnevenRows="true" Style="{StaticResource lstStyle}" ItemTapped="lstConfigs_ItemTapped">
           <ListView.ItemTemplate>
             <DataTemplate>
               <ViewCell>

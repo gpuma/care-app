@@ -1878,6 +1878,8 @@ namespace CareApp.Droid
 			global::FAB.Droid.Resource.Styleable.ViewStubCompat_android_id = global::CareApp.Droid.Resource.Styleable.ViewStubCompat_android_id;
 			global::FAB.Droid.Resource.Styleable.ViewStubCompat_android_inflatedId = global::CareApp.Droid.Resource.Styleable.ViewStubCompat_android_inflatedId;
 			global::FAB.Droid.Resource.Styleable.ViewStubCompat_android_layout = global::CareApp.Droid.Resource.Styleable.ViewStubCompat_android_layout;
+			global::Plugin.TextToSpeech.Resource.String.ApplicationName = global::CareApp.Droid.Resource.String.ApplicationName;
+			global::Plugin.TextToSpeech.Resource.String.Hello = global::CareApp.Droid.Resource.String.Hello;
 			global::Plugin.Vibrate.Resource.String.ApplicationName = global::CareApp.Droid.Resource.String.ApplicationName;
 			global::Plugin.Vibrate.Resource.String.Hello = global::CareApp.Droid.Resource.String.Hello;
 			global::Splat.Resource.String.library_name = global::CareApp.Droid.Resource.String.library_name;

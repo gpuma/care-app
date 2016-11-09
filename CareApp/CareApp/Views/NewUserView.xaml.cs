@@ -1,6 +1,7 @@
 ﻿using CareApp.Models;
 using System;
 using Xamarin.Forms;
+using Acr.UserDialogs;
 
 namespace CareApp.Views
 {
@@ -36,6 +37,8 @@ namespace CareApp.Views
 
         async void CrearUsuario()
         {
+            var progConfig = new ProgressDialogConfig { Title = "Creando usuario...", AutoShow = true };
+            bool success = false;
             //todo: añadir check y feedback de inserción
             var nuevoUsuario = new Usuario
             {
@@ -48,8 +51,11 @@ namespace CareApp.Views
                 Telefono = txtTelefono.Text,
                 Cuidante = txtCuidante.Text
             };
-            var rest = new Data.RESTService();
-            var success = await rest.SaveUser(nuevoUsuario);
+            using (var progDialog = UserDialogs.Instance.Progress(progConfig))
+            {
+                var rest = new Data.RESTService();
+                success = await rest.SaveUser(nuevoUsuario);
+            }
             if (success)
             {
                 Notifier.Inform("Usuario creado correctamente.");

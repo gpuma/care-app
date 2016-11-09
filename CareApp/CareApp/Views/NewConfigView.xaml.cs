@@ -49,7 +49,8 @@ namespace CareApp.Views
                 Rango = pckRange.SelectedIndex + 1,
                 //la bd está en miliseg.
                 Tiempo = Int32.Parse(txtTime.Text) * 1000,
-                Nombre = txtName.Text
+                Nombre = txtName.Text,
+                Hora = null
             };
             var rest = new Data.RESTService();
             var success = await rest.SaveConfig(newConfig);

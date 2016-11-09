@@ -140,7 +140,10 @@ namespace CareApp.Data
             var uri = baseRESTUri + "configuracion";
             try
             {
-                var json = JsonConvert.SerializeObject(newConfig);
+                //TODO: bug: no se puede guardar la hora de una configuración
+                var json = JsonConvert.SerializeObject(newConfig,
+                    new Newtonsoft.Json.Converters.IsoDateTimeConverter()
+                    { DateTimeFormat = "yyyy-MM-dd'T'HH:mm:ss" });
                 
                 //we need to remove the id field cause it's auto-incremented
                 json = RemoveIdFieldFromJson(json);

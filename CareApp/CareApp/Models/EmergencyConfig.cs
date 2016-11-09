@@ -32,7 +32,7 @@ namespace CareApp.Models
         //public int Proximity { get; set; }
         public int Tiempo { get; set; }
         public string Paciente { get; set; }
-        public DateTime Hora { get; set; }
+        public DateTime? Hora { get; set; }
     }
 
     //todo: load this from db or hardcode it?

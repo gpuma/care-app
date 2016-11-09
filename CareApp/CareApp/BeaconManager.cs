@@ -98,7 +98,7 @@ namespace CareApp
                         }
                         currentTimer.Start();
                         if (currentTimer.ElapsedMilliseconds >= econfig.Tiempo &&
-                             DateTime.Now.Hour >= econfig.Hora.Hour)
+                             DateTime.Now.Hour >= econfig.Hora.Value.Hour)
                         {
                             //just in case
                             EnableRanging = false;

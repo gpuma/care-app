@@ -1,6 +1,8 @@
 ﻿using System;
 using Xamarin.Forms;
 using Acr.UserDialogs;
+using Plugin.TextToSpeech;
+//using Plugin.TextToSpeech.Abstractions;
 
 namespace CareApp.Views
 {
@@ -23,10 +25,14 @@ namespace CareApp.Views
             }
 
             if (user == null)
-                Notifier.Inform("error logueandose");
+            {
+                Notifier.Inform("Error al iniciar sesión.");
+            }
             else
-                Notifier.Inform("successful login");
-
+            {
+                Notifier.Inform(string.Format("Bienvenido, {0}.", user.Nombre));
+                CrossTextToSpeech.Current.Speak(string.Format("Bienvenido, {0}.", user.Nombre));
+            }
             ProceedWithLogin();
         }
 

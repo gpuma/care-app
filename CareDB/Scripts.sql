@@ -16,11 +16,11 @@ INSERT [dbo].[Usuario] ([Nombre], [Apellido], [Username], [Password], [Tipo], [C
 GO
 
 select * from TipoEmergencia
-
-insert into TipoEmergencia values(1,'ProximidadPorPeriodo','Emergencia por proximidad')
-insert into TipoEmergencia values(2,'ProximidadPorPeriodoAHora','Emergencia por proximidad a hora')
-insert into TipoEmergencia values(3,'CruceRapido','Emergencia por cruce rápido')
-insert into TipoEmergencia values(4,'CruceIncompleto','Emergencia por cruce incompleto')
+delete from TipoEmergencia
+insert into TipoEmergencia values(0,'ProximidadPorPeriodo','Emergencia por proximidad')
+insert into TipoEmergencia values(1,'ProximidadPorPeriodoAHora','Emergencia por proximidad a hora')
+insert into TipoEmergencia values(2,'CruceRapido','Emergencia por cruce rápido')
+insert into TipoEmergencia values(3,'CruceIncompleto','Emergencia por cruce incompleto')
 
 insert into Usuario values ('Gustavo','Puma','vash','vash',1,'vash','+51921302769')
 insert into Usuario values ('Elvis','Puma','elvis','elvis',0,'vash','+51054470160')
@@ -32,3 +32,13 @@ select * from Configuracion
 
 insert into Configuracion values (1,'chio',0,28927,null,1,2000,'baño')
 insert into Configuracion values (2,'chio',2,40796,53847,1,10000,'escaleras')
+
+declare @p1 int
+set @p1=59
+exec sp_prepexec @p1 output,N'@P1 nvarchar(19),@P2 int,@P3 nvarchar(3),@P4 int,@P5 int,@P6 int,@P7 int,@P8 nvarchar(6)',N'SELECT TOP 1 [Configuracion].[Id] AS [Configuracion_Id], [Configuracion].[Paciente] AS [Configuracion_Paciente], [Configuracion].[Tipo] AS [Configuracion_Tipo], [Configuracion].[BeaconId1] AS [Configuracion_BeaconId1], [Configuracion].[BeaconId2] AS [Configuracion_BeaconId2], [Configuracion].[Rango] AS [Configuracion_Rango], [Configuracion].[Tiempo] AS [Configuracion_Tiempo], [Configuracion].[Nombre] AS [Configuracion_Nombre], [Configuracion].[Hora] AS [Configuracion_Hora] FROM [Configuracion] WHERE [Configuracion].[Hora] = @P1 AND [Configuracion].[Tiempo] = @P2 AND [Configuracion].[Paciente] = @P3 AND [Configuracion].[Tipo] = @P4 AND [Configuracion].[BeaconId1] = @P5 AND [Configuracion].[BeaconId2] = @P6 AND [Configuracion].[Rango] = @P7 AND [Configuracion].[Nombre] = @P8',N'0001-01-01T00:00:00',10000,N'emi',0,40796,0,1,N'prueba'
+select @p1
+go
+
+select * from Configuracion
+delete from Configuracion
+insert into Configuracion values ('emi',0,40796,null,0,10,'prueba', null)

@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel;
 using Xamarin.Forms;
 using Plugin.Vibrate;
+using Plugin.TextToSpeech;
 
 namespace CareApp.Views
 {
@@ -18,6 +19,10 @@ namespace CareApp.Views
             InitializeComponent();
             //vibramos el dispositivo xq se dio una emergencia
             CrossVibrate.Current.Vibration(1000);
+
+            //le hablamos al usuario
+            CrossTextToSpeech.Current.Speak(String.Format("¿Se encuentra usted bien, {0}?", user.Nombre));
+
             this.user = user;
             //la necesitamos para saber q tipo de emergencia ocurrió
             this.econfig = econfig;

@@ -6,7 +6,7 @@
              Title="Alerta!">
   <ContentPage.Content>
     <StackLayout Style="{StaticResource stackStyle}">
-      <Label x:Name="txtAlerta" XAlign="Center" YAlign="Center" FontSize="30" Text="¿ESTÁS BIEN?" Style="{StaticResource lblStyle}"/>
+      <Label x:Name="txtAlerta" XAlign="Center" YAlign="Center" FontSize="40" Text="¿ESTÁ BIEN?" Style="{StaticResource lblStyle}"/>
       <Label x:Name="txtMensaje" Text="{Binding MsjTiempo}" XAlign="Center" YAlign="Center" FontSize="25" Style="{StaticResource lblStyle}"/>
       <ProgressBar x:Name="progBar" BackgroundColor="White"/>
       <!--todo: implementar llamar Cuidante-->

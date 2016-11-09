@@ -43,7 +43,7 @@ namespace CareApp
             {
                 Setters =
                 {
-                    new Setter { Property = StackLayout.VerticalOptionsProperty, Value = LayoutOptions.CenterAndExpand },
+                    new Setter { Property = StackLayout.VerticalOptionsProperty, Value = LayoutOptions.FillAndExpand },
                     new Setter { Property = StackLayout.MarginProperty, Value = new Thickness(10) }
                 }
             };

@@ -3,5 +3,12 @@
 	<uses-sdk android:minSdkVersion="18" android:targetSdkVersion="18" />
 	<uses-permission android:name="android.permission.BLUETOOTH" />
 	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+  
+  <!--requeridos para Plugin.BLE-->
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  
+  <!--hace que la aplicación solo este disponibles a dispositivos con soporte para BLE-->
+  <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
 	<application></application>
 </manifest>

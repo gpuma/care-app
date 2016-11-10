@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using Acr.UserDialogs;
 using Plugin.TextToSpeech;
-//using Plugin.TextToSpeech.Abstractions;
+using Plugin.BLE;
 
 namespace CareApp.Views
 {
@@ -12,6 +12,11 @@ namespace CareApp.Views
         public LoginView()
         {
             InitializeComponent();
+
+            //le recordamos al usuario que prenda su bluetooth
+            var ble = CrossBluetoothLE.Current;
+            if(!ble.IsOn)
+                Notifier.Inform("BLE no está activado");
         }
 
         private async void btnLogin_Clicked(object sender, EventArgs e)
@@ -32,8 +37,8 @@ namespace CareApp.Views
             {
                 Notifier.Inform(string.Format("Bienvenido, {0}.", user.Nombre));
                 CrossTextToSpeech.Current.Speak(string.Format("Bienvenido, {0}.", user.Nombre));
+                ProceedWithLogin();
             }
-            ProceedWithLogin();
         }
 
         public async void ProceedWithLogin()

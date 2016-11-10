@@ -41,4 +41,7 @@ go
 
 select * from Configuracion
 delete from Configuracion
+select * from Usuario
+update usuario set Password= 'juan' where username='juan'
+delete from Usuario
 insert into Configuracion values ('emi',0,40796,null,0,10,'prueba', null)

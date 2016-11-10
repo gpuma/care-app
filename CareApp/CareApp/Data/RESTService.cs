@@ -17,6 +17,7 @@ namespace CareApp.Data
         HttpClient client;
         //according to sandman2ctl default values
         string propertyName = "resources";
+        //string baseRESTUri = "http://10.0.43.40:5000/";
         string baseRESTUri = "http://192.168.0.100:5000/";
         //la cacheamos en memoria
         List<Usuario> allUsers;

@@ -10,7 +10,7 @@
       <Label x:Name="txtMensaje" Text="{Binding MsjTiempo}" XAlign="Center" YAlign="Center" FontSize="25" Style="{StaticResource lblStyle}"/>
       <ProgressBar x:Name="progBar" BackgroundColor="White"/>
       <!--todo: implementar llamar Cuidante-->
-      <Button x:Name="btnLlamar" Image="phone.png" FontSize="30" Text="CUIDANTE" Style="{StaticResource btnStyle}"/>
+      <Button x:Name="btnLlamar" Image="phone.png" FontSize="30" Text="CUIDANTE" Clicked="btnLlamar_Clicked"  Style="{StaticResource btnStyle}"/>
       <Button x:Name="btnAyuda" Image="ambulance.png" FontSize="30" Text="AYUDA" BackgroundColor="Red" Clicked="btnAyuda_Clicked"  Style="{StaticResource btnStyle}"/>
       <Button x:Name="btnOk" Image="okay.png" FontSize="30" BackgroundColor="Olive" Text="ESTOY BIEN" Clicked="btnOk_Clicked"  Style="{StaticResource btnStyle}"/>
     </StackLayout>

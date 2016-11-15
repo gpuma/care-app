@@ -29,7 +29,7 @@ namespace CareApp.Views
             ShouldCreateEmergency = false;
 
             //el tiempo de cuenta a atrás con su respectivo mensaje
-            vm.Tiempo = 5;
+            vm.Tiempo = 10;
             UpdateMsg();
 
             BindingContext = vm;
@@ -85,6 +85,11 @@ namespace CareApp.Views
         }
 
         private void btnAyuda_Clicked(object sender, EventArgs e)
+        {
+            //MakeCall();
+        }
+
+        private void btnLlamar_Clicked(object sender, EventArgs e)
         {
             MakeCall();
         }
